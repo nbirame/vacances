@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="listing">
+            <t t-call="web.html_container">
+                <div class="page">
+                    <h5 style="text-align:center;color:#800000;margin-top:50px;">Agents En Congé</h5>
+                    <table class="table table-bordered mb64 table-striped">
+                        <thead>
+                            <tr>
+                                <th>Prénom</th>
+                                <th>Nom</th>
+                                <th>Fonction</th>
+                                <th>Date de début</th>
+                                <th>Date de Fin</th>
+                                <th>Nombres de jours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="sum_row2" t-value="0"/>
+                            <tr t-foreach="objects" t-as="leave">
+                                <td>
+                                    <t t-foreach="leave.employee_id.name.split(' ')[:-1]" t-as="prenom">
+                                        <span t-out="prenom"/>
+                                    </t>
+                                </td>
+                                <td>
+                                    <span t-esc="leave.employee_id.name.split(' ')[-1]" style="font-weight: bold;"/>
+                                </td>
+                                <td>
+                                    <span t-esc="leave.employee_id.job_title" style="font-weight: bold;"/>
+                                </td>
+                                <td>
+                                    <span t-esc="leave.date_from" style="font-weight: bold;"/>
+                                </td>
+                                <td>
+                                    <span t-esc="leave.date_to" style="font-weight: bold;"/>
+                                </td>
+                                <td>
+                                    <span t-esc="int(leave.number_of_days)" style="font-weight: bold;"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+
+</odoo>

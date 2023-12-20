@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_open_url" model="website.menu">
+        <field name="name">Agents en congé</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="url">/conge</field>
+        <field name="sequence" type="int">85</field>
+    </record>
+    <record id="action_open_url" model="website.menu">
+        <field name="name">Agents en congé</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="url">/web#cids=1&menu_id=387&action=511&model=hr.leave&view_type=calendar</field>
+        <field name="sequence" type="int">85</field>
+    </record>
+</odoo>

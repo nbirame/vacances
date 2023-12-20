@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="vacances_ferier_action" model="ir.actions.act_window">
+        <field name="name">Fériés</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">vacances.ferier</field>
+        <field name="view_mode">tree,form,activity,graph,pivot</field>
+    </record>
+    <record id="vacances_ferier_tree" model="ir.ui.view">
+        <field name="name">vacances.ferier.tree</field>
+        <field name="model">vacances.ferier</field>
+        <field name="arch" type="xml">
+            <tree string="La liste des feriers">
+                <field name="party_id"/>
+                <field name="type_fete"/>
+                <field name="date_star"/>
+                <field name="date_end"/>
+                <field name="number_of_days_party"/>
+            </tree>
+        </field>
+    </record>
+    <record id="vacances_ferier_search" model="ir.ui.view">
+        <field name="model">vacances.ferier</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="party_id"/>
+                <field name="type_fete"/>
+            </search>
+        </field>
+    </record>
+    <record id="vacances_ferier_form" model="ir.ui.view">
+        <field name="name">vacances.ferier.form</field>
+        <field name="model">vacances.ferier</field>
+        <field name="arch" type="xml">
+            <form string="Détail ferier">
+                <sheet>
+                    <div class="oe_title">
+                        <group name="group_top" col="4">
+                            <field name="party_id"/>
+                            <field name="type_fete"/>
+                            <field name="date_star"/>
+                            <field name="date_end"/>
+                            <field name="date_debut" invisible="1"/>
+                            <field name="date_fin" invisible="1"/>
+                            <field name="number_of_days_party"/>
+                        </group>
+                    </div>
+                    <!-- More elements will be added from here... -->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_ferier_cong"
+            action="vacances_ferier_action"
+            name="Fériés"
+            parent="hr_holidays.menu_hr_holidays_configuration"
+            groups="hr_holidays.group_hr_holidays_manager"
+            sequence="3"/>
+<!--
+    <menuitem
+        name="Vacances"
+        id="menu_vacances_root"/>
+    <menuitem
+        name="Configuration"
+        id="menu_conf_vacance"
+        parent="menu_vacances_root"
+        sequence="2"/>
+    <menuitem
+        id="menu_ferier_miss"
+        name="Ferier"
+        parent="menu_conf_vacance"
+        action="vacances_ferier_action"
+        sequence="4"/>
+-->
+
+</odoo>

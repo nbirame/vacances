@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--Email template -->
+        <record id="email_template_conge" model="mail.template">
+            <field name="name">Demande de Congé</field>
+            <!--                <field name="email_from">{{object.chef.user_id.email or user.email_formatted}}</field>-->
+            <field name="email_to">biramendiaye71@gmail.com</field>
+            <field name="subject">Demande de Congé {{object.name or ''}}</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <!--<field name="report_template" ref="mission.report_mission_delegation_equipe"/>-->
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <div>Bonjour,<br/>
+                     <span t-out="object.manager_id.name or ''"></span> l'agent
+                     <span t-out="object.user_id.name or ''"></span><br/>
+                     <p>A fait une demande de congé du</p><br/>
+                     <span t-out="object.date_from or ''"></span> au
+                     <span t-out="object.date_to or ''"></span><br/>
+                     <span t-out="object.get_url(object.id) or ''"></span>
+                    </div>
+                        ]]>
+            </field>
+        </record>
+        <record id="email_template_reponse_conge" model="mail.template">
+            <field name="name">Demande de Congé</field>
+            <field name="email_from">{{object.user_id.email or user.email_formatted}}</field>
+            <field name="email_to">{{ object.user_id.work_email }}</field>
+            <field name="subject">Demande de Congé {{object.user_id.name or ''}}</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <div>Bonjour,<br/>
+                     <span t-out="object.user_id.name or ''"></span><br/>
+                     <p>Votre demande de congé a été accepté. Passez d'excellente vacances.</p><br/>
+                     <span t-out="object.get_url(object.id) or ''"></span>
+                    </div>
+                        ]]>
+            </field>
+        </record>
+        <record id="email_template_chefService_conge" model="mail.template">
+            <field name="name">Demande de Congé</field>
+            <!--                <field name="email_from">{{object.user_id.work_email or user.email_formatted}}</field>-->
+            <field name="email_to">{{ object.user_id.employee_parent_id.work_email or '' }}</field>
+            <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <!--<field name="report_template" ref="mission.report_mission_delegation_equipe"/>-->
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <div>Bonjour,<br/>
+                     <span t-out="object.user_id.employee_parent_id.name or ''"></span><br/>
+                     <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé</p>
+                     <span t-out="object.date_from or ''"></span> au
+                     <span t-out="object.date_to or ''"></span><br/>
+                     <span t-out="object.get_url(object.id) or ''"></span>
+                     <span t-out="object.get_agent_on_leave() or ''"></span>
+                    </div>
+                        ]]>
+            </field>
+        </record>
+        <record id="email_template_chefDep_conge" model="mail.template">
+            <field name="name">Demande de Congé</field>
+            <!--                <field name="email_from">{{object.user_id.work_email or user.email_formatted}}</field>-->
+            <field name="email_to">{{object.user_id.employee_parent_id.work_email or
+                object.user_id.employee_parent_id.parent_id.user_id.work_email or '' }}
+            </field>
+            <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <!--<field name="report_template" ref="mission.report_mission_delegation_equipe"/>-->
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <div>Bonjour Directeur,<br/>
+                     <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
+                     <span t-out="object.date_from or ''"></span> au
+                     <span t-out="object.date_to or ''"></span><br/>
+                     <span t-out="object.get_url(object.id) or ''"></span>
+                    </div>
+                        ]]>
+            </field>
+        </record>
+        <record id="email_template_drh_conge" model="mail.template">
+            <field name="name">Demande de Congé</field>
+            <field name="email_to">{{ object.get_drh() }}}</field>
+            <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <div>Bonjour DRH,
+                         <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
+                         <span t-out="object.date_from or ''"></span> au
+                         <span t-out="object.date_to or ''"></span><br/>
+                         <span t-out="object.get_url(object.id) or ''"></span>
+                    </div>
+                        ]]>
+            </field>
+        </record>
+        <record id="email_template_SG_conge" model="mail.template">
+            <field name="name">Demande de Congé</field>
+            <!--<field name="email_to">{{ object.user_id.employee_parent_id.parent_id.user_id.employee_parent_id.parent_id.user_id.employee_parent_id.user_id.work_email or ''}}
+            </field>-->
+            <field name="email_to">{{ object.get_sg() }}</field>
+            <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <!--<field name="report_template" ref="mission.report_mission_delegation_equipe"/>-->
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <div>Bonjour SG, <br/>
+                     <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
+                     <span t-out="object.date_from or ''"></span> au
+                     <span t-out="object.date_to or ''"></span><br/>
+                     <span t-out="object.get_url(object.id) or ''"></span>
+                    </div>
+                        ]]>
+            </field>
+        </record>
+        <record id="email_template_AG_conge" model="mail.template">
+            <field name="name">Demande de Congé</field>
+            <!--                <field name="email_from">{{object.user_id.work_email or user.email_formatted}}</field>-->
+            <!--<field name="email_to">{{ object.user_id.employee_parent_id.parent_id.user_id.employee_parent_id.parent_id.user_id.employee_parent_id.parent_id.user_id.work_email or object.user_id.employee_parent_id.parent_id.user_id.work_email or object.user_id.employee_parent_id.work_email or '' }}
+            </field>-->
+            <field name="email_to">{{ object.get_ag() }}</field>
+            <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <!--<field name="report_template" ref="mission.report_mission_delegation_equipe"/>-->
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <div>Bonjour AG, <br/>
+                     <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
+                     <span t-out="object.date_from or ''"></span> au
+                     <span t-out="object.date_to or ''"></span><br/>
+                     <span t-out="object.get_url(object.id) or ''"></span>
+                    </div>
+                        ]]>
+            </field>
+        </record>
+        <record id="email_template_rejeter_conge" model="mail.template">
+            <field name="name">Demande de Congé</field>
+            <field name="email_to">{{ object.user_id.work_email }}</field>
+            <field name="subject">Demande de Congé {{object.user_id.name or ''}}</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                    <div>Bonjour,<br/>
+                     <span t-out="object.user_id.name or ''"></span><br/>
+                     <p>Votre demande de congé a été rejeté</p><br/>
+                     <span t-out="object.get_url(object.id) or ''"></span><br/>
+                    </div>
+                        ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

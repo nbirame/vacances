@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_agent_on_leave">
+        <!--<div class="header" style="margin-top: 0px;">
+            <img src="/mission/static/src/img/fon.jpeg" alt="Logo" class="w-910 h-3"/>
+        </div>-->
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h5 style="text-align:center;color:#800000;margin-top:50px;">Agents En Congé</h5>
+                        <table class="table table-bordered mb64 table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Prénom</th>
+                                    <th>Nom</th>
+                                    <th>Fonction</th>
+                                    <th>Date de début</th>
+                                    <th>Date de Fin</th>
+                                    <th>Nombres de jours</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sum_row2" t-value="0"/>
+                                <tr t-foreach="o.get_agent_on_leave()" t-as="leave">
+                                    <td>
+                                        <t t-foreach="leave.employee_id.name.split(' ')[:-1]" t-as="prenom">
+                                            <span t-out="prenom"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <span t-esc="leave.employee_id.name.split(' ')[-1]" style="font-weight: bold;"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="leave.employee_id.job_title" style="font-weight: bold;"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="leave.date_from" style="font-weight: bold;"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="leave.date_to" style="font-weight: bold;"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="leave.number_of_days" style="font-weight: bold;"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-right">
+                            Fait à Dakar, le
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                        </p>
+                        <h6 class="text-right">
+                            AG
+                        </h6>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

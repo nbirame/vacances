@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+            string="Agent en Congé"
+            id="report_conge_leave"
+            model="hr.leave"
+            report_type="qweb-pdf"
+            menu="False"
+            name="vacances.report_agent_on_leave"
+            file="vacances.report_agent_on_leave"
+    />
+</odoo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.module.category" id="module_vacances">
+            <field name="name">Congé</field>
+            <field name="description">Congé</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="group_conge_drh" model="res.groups">
+            <field name="name">DRH</field>
+            <field name="category_id" ref="vacances.module_vacances"/>
+            <field name="comment">Groupe Direction Ressource Humaine</field>
+        </record>
+        <record id="group_conge_visiteur" model="res.groups">
+            <field name="name">AGENTS</field>
+            <field name="category_id" ref="vacances.module_vacances"/>
+            <field name="comment">AGENTS</field>
+        </record>
+        <record id="group_conge_sg" model="res.groups">
+            <field name="name">SG</field>
+            <field name="category_id" ref="vacances.module_vacances"/>
+            <field name="comment">Groupe SG</field>
+        </record>
+        <record id="group_conge_AG" model="res.groups">
+            <field name="name">AG</field>
+            <field name="category_id" ref="vacances.module_vacances"/>
+            <field name="comment">Groupe AG</field>
+        </record>
+        <record id="group_conge_chef_service" model="res.groups">
+            <field name="name">Chef Service</field>
+            <field name="category_id" ref="vacances.module_vacances"/>
+            <field name="comment">Groupe Chef service</field>
+        </record>
+        <record id="group_conge_directeur" model="res.groups">
+            <field name="name">Directeur</field>
+            <field name="category_id" ref="vacances.module_vacances"/>
+            <field name="comment">Groupe Directeur</field>
+        </record>
+        <record id="group_conge_responsable" model="res.groups">
+            <field name="name">Responsable</field>
+            <field name="category_id" ref="vacances.module_vacances"/>
+            <field name="comment">Groupe Responsable</field>
+        </record>
+        <!--   <record id="base.default_user" model="res.users">
+                   <field name="groups_id" eval="[(4,ref('group_mission_employee'))]"/>
+               </record>
+        -->
+    </data>
+    <data noupdate="1">
+        <record id="conge_demande_rule_chef" model="ir.rule">
+            <field name="name">Chef Service</field>
+            <field name="model_id" ref="model_hr_leave"/>
+            <field name="domain_force">[
+                ('holiday_type', '=', 'employee'),
+                '|',
+                '&amp;',
+                ('employee_id.user_id', '=', user.id),
+                ('state', '!=', 'validate'),
+                ('employee_id.leave_manager_id', '=', user.id),
+                ]
+            </field>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="groups" eval="[(4, ref('vacances.group_conge_chef_service'))]"/>
+        </record>
+        <record id="conge_demande_rule_employee" model="ir.rule">
+            <field name="name">Role Agent</field>
+            <field name="model_id" ref="model_hr_leave"/>
+            <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="groups" eval="[(4,ref('vacances.group_conge_visiteur'))]"/>
+        </record>
+        <record id="conge_demande_chefDep_rule" model="ir.rule">
+            <field name="name">Chef departement</field>
+            <field name="model_id" ref="model_hr_leave"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="domain_force">['|','|', ('employee_id.user_id', '=', user.id),
+                ('employee_id.parent_id.user_id', '=', user.id),
+                '|', '|', ('employee_id.department_id', '=', False), ('employee_id.department_id.member_ids.user_id',
+                'in', [user.id]),
+                ('employee_id.department_id.manager_id.user_id', '=', user.id)]
+            </field>
+            <field name="groups" eval="[(4, ref('vacances.group_conge_directeur'))]"/>
+        </record>
+        <record id="hr_leave_rule_top_manager" model="ir.rule">
+            <field name="name">DRH, SG</field>
+            <field name="model_id" ref="model_hr_leave"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('vacances.group_conge_sg','vacances.group_conge_drh'))]"/>
+        </record>
+        <record id="hr_leave_rule_ag" model="ir.rule">
+            <field name="name">Role AG</field>
+            <field name="model_id" ref="model_hr_leave"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('vacances.group_conge_AG'))]"/>
+        </record>
+    </data>
+</odoo>
