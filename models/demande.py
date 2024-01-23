@@ -327,7 +327,7 @@ class Demande(models.Model):
             }
 
     def get_url(self, id):
-        url = f'http://localhost:8069/web#id={id}&cids=1&model=hr.leave&view_type=form'
+        url = f'http://95.111.239.216:1010/web#id={id}&cids=1&model=hr.leave&view_type=form'
         return url
 
     def get_email(self, param):
