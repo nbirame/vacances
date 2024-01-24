@@ -2,6 +2,7 @@ from datetime import timedelta, datetime
 
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError, ValidationError
+from werkzeug.urls import url_encode
 
 
 class Demande(models.Model):
@@ -330,7 +331,13 @@ class Demande(models.Model):
         # url = f'http://95.111.239.216:1010/web#id={id}&cids=1&model=hr.leave&view_type=form'
         url_link = f'/web#id={id}&cids=1&model=hr.leave&view_type=form'
         base_url = self.env["ir.config_parameter"].get_param("web.base.url")
-        return base_url + url_link
+        url = '/web#%s' % url_encode({
+            'id': id,
+            'cids': 1,
+            'model': 'hr.leave',
+            'view_type': 'form',
+        })
+        return base_url + url
 
     def get_email(self, param):
         if param.employee_parent_id.parent_id.user_id.employee_parent_id.parent_id.user_id.employee_parent_id.parent_id.user_id.work_email:
