@@ -327,8 +327,10 @@ class Demande(models.Model):
             }
 
     def get_url(self, id):
-        url = f'http://95.111.239.216:1010/web#id={id}&cids=1&model=hr.leave&view_type=form'
-        return url
+        # url = f'http://95.111.239.216:1010/web#id={id}&cids=1&model=hr.leave&view_type=form'
+        url_link = f'/web#id={id}&cids=1&model=hr.leave&view_type=form'
+        base_url = self.env["ir.config_parameter"].get_param("web.base.url")
+        return base_url + url_link
 
     def get_email(self, param):
         if param.employee_parent_id.parent_id.user_id.employee_parent_id.parent_id.user_id.employee_parent_id.parent_id.user_id.work_email:
