@@ -28,6 +28,7 @@ class Demande(models.Model):
         ('demi-jour', 'Demi journée')
     ], store=True, tracking=True, copy=False, string="Journée"
     )
+    can_validate = fields.Boolean('Can Validate', compute='_compute_can_validate')
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -259,6 +260,17 @@ class Demande(models.Model):
             employee_requests.filtered(lambda holiday: holiday.validation_type != 'no_validation').activity_update()
         return True
 
+    @api.depends('employee_id', 'state')
+    def _compute_can_validate(self):
+        current_employee = self.env.user.employee_id.id
+        user = self.env['res.users'].sudo().search([('employee_id', '=', current_employee)], limit=1)
+        leaves = self.env['hr.leave'].sudo().search([])
+        # for user in users:
+        if user.has_group('vacances.group_conge_directeur'):
+            for leave_can in leaves:
+                if leave_can.state == "drh":
+                    self.can_validate =True
+
     @api.depends('date_from', 'date_to', 'employee_id', 'type_jour')
     def _compute_number_of_days(self):
         for holiday in self:
@@ -329,15 +341,9 @@ class Demande(models.Model):
 
     def get_url(self, id):
         # url = f'http://95.111.239.216:1010/web#id={id}&cids=1&model=hr.leave&view_type=form'
-        url_link = f'/web#id={id}&cids=1&model=hr.leave&view_type=form'
         base_url = self.env["ir.config_parameter"].get_param("web.base.url")
-        url = '/web#%s' % url_encode({
-            'id': id,
-            'cids': 1,
-            'model': 'hr.leave',
-            'view_type': 'form',
-        })
-        return base_url + url
+        url = f'{base_url}/web#id={id}&cids=1&model=hr.leave&view_type=form'
+        return url
 
     def get_email(self, param):
         if param.employee_parent_id.parent_id.user_id.employee_parent_id.parent_id.user_id.employee_parent_id.parent_id.user_id.work_email:
