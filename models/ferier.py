@@ -8,6 +8,7 @@ from odoo.exceptions import ValidationError
 
 class Ferier(models.Model):
     _name = "vacances.ferier"
+    _inherit = ['mail.thread']
     _description = "Jours de Fériés"
 
     party_id = fields.Many2one('vacances.party', string='Fête')
