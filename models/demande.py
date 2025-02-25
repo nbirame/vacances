@@ -136,7 +136,7 @@ class Demande(models.Model):
         # self.action_send_email_notifier("email_template_SG_conge")
 
     def action_ag(self):
-        self.write({'state': 'validate'})
+        self.write({'state': 'ag'})
         self.action_send_email_notifier("email_template_AG_conge")
 
     def action_annuler(self):
