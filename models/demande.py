@@ -167,7 +167,7 @@ class Demande(models.Model):
                     leaves.mapped('employee_id.name')))
 
         if any(holiday.state not in ['confirm', 'directeur', 'drh', 'sg',
-                                     'ag', 'chef', 'chefDep'] and holiday.validation_type != 'no_validation' for holiday
+                                     'ag', 'chefDep', 'validate'] and holiday.validation_type != 'no_validation' for holiday
                in self):
             raise UserError(_('Time off request must be confirmed in order to approve it.'))
 
