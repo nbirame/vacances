@@ -15,7 +15,7 @@ class Demande(models.Model):
         ('confirm', 'Confirmer'),
         ('chefDep', 'Validation Chef Departement'),
         ('refuse', 'Refused'),
-        ('validate1', 'Validation Directeur'),
+        ('directeur', 'Validation Directeur'),
         ('drh', 'Validation DRH'),
         ('sg', 'Validation SG'),
         ('ag', 'Validation AG'),
@@ -105,7 +105,7 @@ class Demande(models.Model):
             self.sudo().write({'state': 'drh'})
             self.action_send_email_notifier("email_template_drh_conge")
         elif user.has_group('vacances.group_conge_chef_service'):
-            self.update({'state': 'validate1'})
+            self.update({'state': 'directeur'})
             self.action_send_email_notifier("email_template_chefDep_conge")
         elif user.has_group('vacances.group_conge_drh'):
             self.sudo().write({'state': 'sg'})
@@ -148,7 +148,7 @@ class Demande(models.Model):
     #     self.action_send_email_notifier("email_template_chefService_conge")
 
     def action_chefDep(self):
-        self.write({'state': 'validate1'})
+        self.write({'state': 'directeur'})
         self.action_send_email_notifier("email_template_drh_conge")
         # self.action_send_email_notifier("email_template_chefDep_conge")
 
@@ -156,7 +156,7 @@ class Demande(models.Model):
         self.write({'state': 'draft'})
 
     def action_directeur(self):
-        self.write({'state': 'validate1'})
+        self.write({'state': 'drh'})
 
     def action_validate(self):
         current_employee = self.env.user.employee_id
@@ -166,7 +166,7 @@ class Demande(models.Model):
                 _('The following employees are not supposed to work during that period:\n %s') % ','.join(
                     leaves.mapped('employee_id.name')))
 
-        if any(holiday.state not in ['confirm', 'validate1', 'drh', 'sg',
+        if any(holiday.state not in ['confirm', 'directeur', 'drh', 'sg',
                                      'ag', 'chef', 'chefDep'] and holiday.validation_type != 'no_validation' for holiday
                in self):
             raise UserError(_('Time off request must be confirmed in order to approve it.'))
@@ -429,7 +429,7 @@ class Demande(models.Model):
                     # if holiday.employee_id == current_employee:
                     #     raise UserError(_('Only a Time Off Manager can approve/refuse its own requests.'))
 
-                    if (state == 'validate1' and val_type == 'both') and holiday.holiday_type == 'employee':
+                    if (state == 'directeur' and val_type == 'both') and holiday.holiday_type == 'employee':
                         if not is_officer and self.env.user != holiday.employee_id.leave_manager_id:
                             raise UserError(_('You must be either %s\'s manager or Time off Manager to approve this '
                                               'leave') % (holiday.employee_id.name))
