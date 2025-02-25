@@ -60,7 +60,7 @@ class Demande(models.Model):
                     values.update({'state': 'drh'})
                     self.action_send_email_notifier("email_template_drh_conge")
                 elif user.has_group('vacances.group_conge_chef_service'):
-                    values.update({'state': 'chefDep'})
+                    values.update({'state': 'directeur'})
                     self.action_send_email_notifier("email_template_chefDep_conge")
                 elif user.has_group('vacances.group_conge_drh'):
                     values.update({'state': 'sg'})
@@ -136,7 +136,7 @@ class Demande(models.Model):
         # self.action_send_email_notifier("email_template_SG_conge")
 
     def action_ag(self):
-        self.write({'state': 'ag'})
+        self.write({'state': 'validate'})
         self.action_send_email_notifier("email_template_AG_conge")
 
     def action_annuler(self):
