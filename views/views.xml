@@ -8,9 +8,9 @@
                 <header>
                     <button name="report_print" string="Les agents en congé" type="object" class="oe_highlight"
                             groups="vacances.group_conge_AG"/>
-                    <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
-                    <button string="VALIDER" name="action_chef" states="confirm" type="object" class="oe_highlight"
-                            groups="vacances.group_conge_chef_service,vacances.group_conge_responsable"/>
+                    <button string="Confirm" name="action_confirm" states="confirm" type="object" class="oe_highlight"/>
+                    <!--<button string="VALIDER" name="action_chef" states="confirm" type="object" class="oe_highlight"
+                            groups="vacances.group_conge_chef_service,vacances.group_conge_responsable"/>-->
                     <button string="Remettre en Brouillon" name="action_draft" states="confirm" type="object"
                             class="oe_highlight"/>
                     <button string="Remettre en Brouillon" name="action_draft" states="chefDep" type="object"
@@ -21,17 +21,19 @@
                             class="oe_highlight" groups="vacances.group_conge_drh"/>
                     <button string="Remettre en Brouillon" name="action_draft" states="ag" type="object"
                             class="oe_highlight" groups="vacances.group_conge_sg"/>
-                    <button string="VALIDER" name="action_chefDep" states="chef" type="object" class="oe_highlight"
+                    <button string="VALIDER" name="action_chefDep" states="chefDep" type="object" class="oe_highlight"
                             groups="vacances.group_conge_chef_service"/>
                     <!--<button validate1 string="VALIDER" name="action_approve" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('can_approve', '=', False), ('state', '!=', 'confirm')]}"/>-->
-                    <button name="action_drh" string="VALIDER" states="chefDep" type="object" class="oe_highlight"
+                    <button name="action_directeur" string="VALIDER" states="validate1" type="object" class="oe_highlight"
                             groups="vacances.group_conge_directeur"/>
-                    <button name="action_sg" string="VALIDER" states="drh" type="object" class="oe_highlight"
+                    <button name="action_drh" string="VALIDER" states="drh" type="object" class="oe_highlight"
                             groups="vacances.group_conge_drh"/>
-                    <button name="action_ag" string="VALIDER" states="sg" type="object" class="oe_highlight"
-                            groups="vacances.group_conge_sg"/>
-                    <button name="action_validate" string="VALIDER" states="ag" type="object" class="oe_highlight"
-                            groups="vacances.group_conge_AG"/>
+                    <button name="action_sg" string="VALIDER" states="sg" type="object" class="oe_highlight"
+                            groups="vacances.group_conge_drh"/>
+                    <button name="action_ag" string="VALIDER" states="ag" type="object" class="oe_highlight"
+                            groups="vacances.group_conge_ag"/>
+                    <!--<button name="action_validate" string="VALIDER" states="validate" type="object" class="oe_highlight"
+                            groups="vacances.group_conge_AG"/>-->
                     <button name="action_annuler" string="Refuser" attrs="{'invisible': [('state', '!=', 'drh')]}"
                             type="object" class="oe_highlight" groups="vacances.group_conge_drh"/>
                     <button name="action_annuler" string="Refuser" attrs="{'invisible': [('state', '!=', 'sg')]}"
@@ -46,7 +48,7 @@
                             attrs="{'invisible': [('state', '!=', 'chefDep')]}"
                             type="object" class="oe_highlight"
                             groups="vacances.group_conge_directeur"/>
-                    <field name="state" widget="statusbar" statusbar_visible="confirm,chef,chefDep,drh,sg,ag,validate"/>
+                    <field name="state" widget="statusbar" statusbar_visible="confirm,chefDep,directeur,drh,sg,ag,validate"/>
                 </header>
             </xpath>
             <xpath expr="//sheet" position="replace">

@@ -13,10 +13,9 @@ class Demande(models.Model):
     state = fields.Selection(selection_add=[
         ('draft', 'To Submit'),
         ('confirm', 'Confirmer'),
-        ('chef', 'Validation Chef Service'),
         ('chefDep', 'Validation Chef Departement'),
         ('refuse', 'Refused'),
-        ('validate1', 'Chef Dep'),
+        ('validate1', 'Validation Directeur'),
         ('drh', 'Validation DRH'),
         ('sg', 'Validation SG'),
         ('ag', 'Validation AG'),
@@ -72,7 +71,7 @@ class Demande(models.Model):
                 elif user.has_group('vacances.group_conge_AG'):
                     values.update({'state': 'validate'})
                 else:
-                    values.update({'state': 'draft'})
+                    values.update({'state': 'confirm'})
 
         holidays = super(Demande, self.with_context(mail_create_nosubscribe=True)).create(vals_list)
 
@@ -106,7 +105,7 @@ class Demande(models.Model):
             self.sudo().write({'state': 'drh'})
             self.action_send_email_notifier("email_template_drh_conge")
         elif user.has_group('vacances.group_conge_chef_service'):
-            self.update({'state': 'chefDep'})
+            self.update({'state': 'validate1'})
             self.action_send_email_notifier("email_template_chefDep_conge")
         elif user.has_group('vacances.group_conge_drh'):
             self.sudo().write({'state': 'sg'})
@@ -127,28 +126,31 @@ class Demande(models.Model):
         return True
 
     def action_drh(self):
-        self.write({'state': 'drh'})
-        self.action_send_email_notifier("email_template_drh_conge")
-
-    def action_sg(self):
         self.write({'state': 'sg'})
         self.action_send_email_notifier("email_template_SG_conge")
+        # self.action_send_email_notifier("email_template_drh_conge")
+
+    def action_sg(self):
+        self.write({'state': 'ag'})
+        self.action_send_email_notifier("email_template_AG_conge")
+        # self.action_send_email_notifier("email_template_SG_conge")
 
     def action_ag(self):
-        self.write({'state': 'ag'})
+        self.write({'state': 'validate'})
         self.action_send_email_notifier("email_template_AG_conge")
 
     def action_annuler(self):
         self.write({'state': 'refuse'})
         self.action_send_email_notifier("email_template_rejeter_conge")
 
-    def action_chef(self):
-        self.write({'state': 'chef'})
-        self.action_send_email_notifier("email_template_chefService_conge")
+    # def action_chef(self):
+    #     self.write({'state': 'chef'})
+    #     self.action_send_email_notifier("email_template_chefService_conge")
 
     def action_chefDep(self):
-        self.write({'state': 'chefDep'})
-        self.action_send_email_notifier("email_template_chefDep_conge")
+        self.write({'state': 'directeur'})
+        self.action_send_email_notifier("email_template_drh_conge")
+        # self.action_send_email_notifier("email_template_chefDep_conge")
 
     def action_draft(self):
         self.write({'state': 'draft'})
