@@ -155,6 +155,9 @@ class Demande(models.Model):
     def action_draft(self):
         self.write({'state': 'draft'})
 
+    def action_directeur(self):
+        self.write({'state': 'validate1'})
+
     def action_validate(self):
         current_employee = self.env.user.employee_id
         leaves = self._get_leaves_on_public_holiday()
