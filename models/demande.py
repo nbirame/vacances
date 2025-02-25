@@ -116,7 +116,7 @@ class Demande(models.Model):
         elif user.has_group('vacances.group_conge_AG'):
             self.sudo().write({'state': 'validate'})
         else:
-            self.sudo().write({'state': 'confirm'})
+            self.sudo().write({'state': 'chefDep'})
         # self.sudo().write({'state': 'chefDep'})
         holidays = self.filtered(lambda leave: leave.validation_type == 'no_validation')
         if holidays:
