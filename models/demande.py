@@ -96,8 +96,8 @@ class Demande(models.Model):
         return holidays
 
     def action_confirm(self):
-        if self.filtered(lambda holiday: holiday.state != 'draft'):
-            raise UserError(_('Time off request must be in Draft state ("To Submit") in order to confirm it.'))
+        # if self.filtered(lambda holiday: holiday.state != 'draft'):
+        #     raise UserError(_('Time off request must be in Draft state ("To Submit") in order to confirm it.'))
         current_employee = self.env.user.employee_id.id
         user = self.env['res.users'].sudo().search([('employee_id', '=', current_employee)], limit=1)
         # for user in users:
