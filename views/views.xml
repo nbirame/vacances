@@ -32,8 +32,8 @@
                             groups="vacances.group_conge_drh"/>
                     <button name="action_ag" string="VALIDER" states="ag" type="object" class="oe_highlight"
                             groups="vacances.group_conge_ag"/>
-                    <!--<button name="action_validate" string="VALIDER" states="validate" type="object" class="oe_highlight"
-                            groups="vacances.group_conge_AG"/>-->
+                    <button name="action_validate" string="VALIDER" states="validate" type="object" class="oe_highlight"
+                            groups="vacances.group_conge_AG"/>
                     <button name="action_annuler" string="Refuser" attrs="{'invisible': [('state', '!=', 'drh')]}"
                             type="object" class="oe_highlight" groups="vacances.group_conge_drh"/>
                     <button name="action_annuler" string="Refuser" attrs="{'invisible': [('state', '!=', 'sg')]}"
