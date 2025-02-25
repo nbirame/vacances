@@ -148,7 +148,7 @@ class Demande(models.Model):
     #     self.action_send_email_notifier("email_template_chefService_conge")
 
     def action_chefDep(self):
-        self.write({'state': 'directeur'})
+        self.write({'state': 'validate1'})
         self.action_send_email_notifier("email_template_drh_conge")
         # self.action_send_email_notifier("email_template_chefDep_conge")
 
