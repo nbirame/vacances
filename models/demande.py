@@ -171,6 +171,7 @@ class Demande(models.Model):
                in self):
             raise UserError(_('Time off request must be confirmed in order to approve it.'))
 
+        self.write({'state': 'validate'})
         self.write({'state': 'validated'})
         # self.action_send_email_notifier("email_template_reponse_conge")
         leaves_second_approver = self.env['hr.leave']
