@@ -12,15 +12,15 @@ class Demande(models.Model):
 
     state = fields.Selection(selection_add=[
         ('draft', 'Brouillon'),
-        ('confirmer', 'Confirmé'),
+        ('confirm', 'Confirmé'),
         ('chefDep', 'Validation Chef Departement'),
         ('refuse', 'Refusé'),
         ('directeur', 'Validation Directeur'),
         ('drh', 'Validation DRH'),
         ('sg', 'Validation SG'),
         ('ag', 'Validation AG'),
-        ('validated', 'validé'),
-    ], default='draft', string="Statut")
+        ('validate', 'validé'),
+    ])
     type_jour = fields.Selection([
         ('jour', 'Entière'),
         ('demi-jour', 'Demi journée')
@@ -45,11 +45,11 @@ class Demande(models.Model):
 
                 # Handle no_validation
                 if mapped_validation_type[leave_type_id] == 'no_validation':
-                    values.update({'state': 'confirmer'})
+                    values.update({'state': 'confirm'})
 
                 if 'state' not in values:
                     # To mimic the behavior of compute_state that was always triggered, as the field was readonly
-                    values['state'] = 'confirmer' if mapped_validation_type[leave_type_id] != 'no_validation' else 'draft'
+                    values['state'] = 'confirm' if mapped_validation_type[leave_type_id] != 'no_validation' else 'draft'
 
                 # Handle double validation
                 if mapped_validation_type[leave_type_id] == 'both':
@@ -69,9 +69,9 @@ class Demande(models.Model):
                     values.update({'state': 'ag'})
                     self.action_send_email_notifier("email_template_AG_conge")
                 elif user.has_group('vacances.group_conge_AG'):
-                    values.update({'state': 'validated'})
+                    values.update({'state': 'validate'})
                 else:
-                    values.update({'state': 'confirmer'})
+                    values.update({'state': 'confirm'})
 
         holidays = super(Demande, self.with_context(mail_create_nosubscribe=True)).create(vals_list)
 
@@ -114,7 +114,7 @@ class Demande(models.Model):
             self.sudo().write({'state': 'ag'})
             self.action_send_email_notifier("email_template_AG_conge")
         elif user.has_group('vacances.group_conge_AG'):
-            self.sudo().write({'state': 'validated'})
+            self.sudo().write({'state': 'validate'})
         else:
             self.sudo().write({'state': 'chefDep'})
         # self.sudo().write({'state': 'chefDep'})
@@ -136,7 +136,7 @@ class Demande(models.Model):
         # self.action_send_email_notifier("email_template_SG_conge")
 
     def action_ag(self):
-        self.write({'state': 'validated'})
+        self.write({'state': 'validate'})
         self.action_send_email_notifier("email_template_AG_conge")
 
     def action_annuler(self):
@@ -166,13 +166,12 @@ class Demande(models.Model):
                 _('The following employees are not supposed to work during that period:\n %s') % ','.join(
                     leaves.mapped('employee_id.name')))
 
-        if any(holiday.state not in ['confirmer', 'directeur', 'drh', 'sg',
-                                     'ag', 'chefDep', 'validated'] and holiday.validation_type != 'no_validation' for holiday
+        if any(holiday.state not in ['confirm', 'directeur', 'drh', 'sg',
+                                     'ag', 'chefDep', 'validate'] and holiday.validation_type != 'no_validation' for holiday
                in self):
             raise UserError(_('Time off request must be confirmed in order to approve it.'))
 
         self.write({'state': 'validate'})
-        self.write({'state': 'validated'})
         # self.action_send_email_notifier("email_template_reponse_conge")
         leaves_second_approver = self.env['hr.leave']
         leaves_first_approver = self.env['hr.leave']
@@ -243,7 +242,7 @@ class Demande(models.Model):
                         leave_skip_state_check=True
                     ).create(split_leaves_vals)
 
-                    split_leaves.filtered(lambda l: l.state in 'validated')._validate_leave_request()
+                    split_leaves.filtered(lambda l: l.state in 'validate')._validate_leave_request()
 
                 values = leave._prepare_employees_holiday_values(employees)
                 leaves = self.env['hr.leave'].with_context(
@@ -412,7 +411,7 @@ class Demande(models.Model):
         for holiday in self:
             val_type = holiday.validation_type
 
-            if not is_manager and state != 'confirmer':
+            if not is_manager and state != 'confirm':
                 if state == 'draft':
                     if holiday.state == 'refuse':
                         raise UserError(_('Only a Time Off Manager can reset a refused leave.'))
@@ -435,7 +434,7 @@ class Demande(models.Model):
                             raise UserError(_('You must be either %s\'s manager or Time off Manager to approve this '
                                               'leave') % (holiday.employee_id.name))
 
-                    if (state == 'validated' and val_type == 'manager') and self.env.user != (
+                    if (state == 'validate' and val_type == 'manager') and self.env.user != (
                             holiday.employee_id | holiday.sudo().employee_ids).leave_manager_id:
                         if holiday.employee_id:
                             employees = holiday.employee_id
@@ -446,6 +445,6 @@ class Demande(models.Model):
                         raise UserError(_('You must be %s\'s Manager to approve this leave', employees))
 
                     if not is_officer and (
-                            state == 'validated' and val_type == 'hr') and holiday.holiday_type == 'employee':
+                            state == 'validate' and val_type == 'hr') and holiday.holiday_type == 'employee':
                         raise UserError(_('You must either be a Time off Officer or Time off Manager to approve this '
                                           'leave'))
