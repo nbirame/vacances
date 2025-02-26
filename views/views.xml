@@ -11,14 +11,14 @@
                     <button string="Confirm" name="action_confirm" states="confirm" type="object" class="oe_highlight"/>
                     <button string="Remettre en Brouillon" name="action_draft" states="confirm" type="object"
                             class="oe_highlight"/>
-                    <button string="Remettre en Brouillon" name="action_draft" states="chefDep" type="object"
+                    <!--<button string="Remettre en Brouillon" name="action_draft" states="chefDep" type="object"
                             class="oe_highlight" groups="vacances.group_conge_chef_service"/>
                     <button string="Remettre en Brouillon" name="action_draft" states="drh" type="object"
                             class="oe_highlight" groups="vacances.group_conge_directeur"/>
                     <button string="Remettre en Brouillon" name="action_draft" states="sg" type="object"
                             class="oe_highlight" groups="vacances.group_conge_drh"/>
                     <button string="Remettre en Brouillon" name="action_draft" states="ag" type="object"
-                            class="oe_highlight" groups="vacances.group_conge_sg"/>
+                            class="oe_highlight" groups="vacances.group_conge_sg"/>-->
                     <button string="VALIDER" name="action_chefDep" states="chefDep" type="object" class="oe_highlight"
                             groups="vacances.group_conge_chef_service"/>
                     <button name="action_directeur" string="VALIDER" states="directeur" type="object" class="oe_highlight"
@@ -237,14 +237,59 @@
         </field>
     </record>
     <record id="action_hr_leave_chefdep_inbox" model="ir.actions.act_window">
-        <field name="name">Mes demandes à valider (Chef Dep)</field>
+        <field name="name">Congés à valider</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','=','chefDep')]</field>
+    </record>
+    <record id="action_hr_leave_directeur_inbox" model="ir.actions.act_window">
+        <field name="name">Congés à valider</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','=','directeur')]</field>
+    </record>
+    <record id="action_hr_leave_drh_inbox" model="ir.actions.act_window">
+        <field name="name">Congés à valider</field>
         <field name="res_model">hr.leave</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[('state','=','drh')]</field>
     </record>
+    <record id="action_hr_leave_sg_inbox" model="ir.actions.act_window">
+        <field name="name">Congés à valider</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','=','sg')]</field>
+    </record>
+    <record id="action_hr_leave_ag_inbox" model="ir.actions.act_window">
+        <field name="name">Congés à valider</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','=','ag')]</field>
+    </record>
     <menuitem id="menu_hr_leave_chefdep_inbox"
-          name="Boîte du DRH"
+          name="Demande de congés à valider"
           parent="hr_holidays.menu_hr_holidays_root"
+          groups="vacances.group_conge_chef_service"
+          action="action_hr_leave_chefdep_inbox"/>
+    <menuitem id="menu_hr_leave_directeur_inbox"
+          name="Demande de congés à valider"
+          parent="hr_holidays.menu_hr_holidays_root"
+          groups="vacances.group_conge_directeur"
+          action="action_hr_leave_chefdep_inbox"/>
+    <menuitem id="menu_hr_leave_drh_inbox"
+          name="Demande de congés à valider"
+          parent="hr_holidays.menu_hr_holidays_root"
+          groups="vacances.group_conge_drh"
+          action="action_hr_leave_drh_inbox"/>
+    <menuitem id="menu_hr_leave_sg_inbox"
+          name="Demande de congés à valider"
+          parent="hr_holidays.menu_hr_holidays_root"
+          groups="vacances.group_conge_sg"
+          action="action_hr_leave_drh_inbox"/>
+    <menuitem id="menu_hr_leave_ag_inbox"
+          name="Demande de congés à valider"
+          parent="hr_holidays.menu_hr_holidays_root"
+          groups="vacances.group_conge_AG"
           action="action_hr_leave_chefdep_inbox"/>
 
 
