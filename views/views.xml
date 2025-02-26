@@ -275,7 +275,7 @@
           name="Demande de congés à valider"
           parent="hr_holidays.menu_hr_holidays_root"
           groups="vacances.group_conge_directeur"
-          action="action_hr_leave_chefdep_inbox"/>
+          action="action_hr_leave_directeur_inbox"/>
     <menuitem id="menu_hr_leave_drh_inbox"
           name="Demande de congés à valider"
           parent="hr_holidays.menu_hr_holidays_root"
