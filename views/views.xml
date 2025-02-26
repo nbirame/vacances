@@ -49,6 +49,10 @@
                     <button name="action_annuler" string="Refuser"
                             attrs="{'invisible': [('state', '!=', 'chefDep')]}"
                             type="object" class="oe_highlight"
+                            groups="vacances.group_conge_chef_service"/>
+                    <button name="action_annuler" string="Refuser"
+                            attrs="{'invisible': [('state', '!=', 'directeur')]}"
+                            type="object" class="oe_highlight"
                             groups="vacances.group_conge_directeur"/>
                     <field name="state" widget="statusbar" statusbar_visible="confirm,chefDep,directeur,drh,sg,ag,validate"/>
                 </header>

@@ -30,7 +30,7 @@
         <record id="group_conge_chef_service" model="res.groups">
             <field name="name">Chef Service</field>
             <field name="category_id" ref="vacances.module_vacances"/>
-            <field name="comment">Groupe Chef service</field>
+            <field name="comment">Groupe Chef Departement</field>
         </record>
         <record id="group_conge_directeur" model="res.groups">
             <field name="name">Directeur</field>
