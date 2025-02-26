@@ -236,6 +236,16 @@
             <xpath expr="//filter[@name='approve']" position="replace"/>
         </field>
     </record>
+    <record id="action_hr_leave_chefdep_inbox" model="ir.actions.act_window">
+        <field name="name">Mes demandes à valider (Chef Dep)</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','=','drh')]</field>
+    </record>
+    <menuitem id="menu_hr_leave_chefdep_inbox"
+          name="Boîte du DRH"
+          parent="hr_holidays.menu_hr_holidays_root"
+          action="action_hr_leave_chefdep_inbox"/>
 
 
 </odoo>
