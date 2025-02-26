@@ -10,18 +10,61 @@ class Demande(models.Model):
     _description = "Demande de Congé"
     _order = 'id desc'
 
-    state = fields.Selection([
-        ('draft', 'Brouillon'),
-        ('confirm', 'Confirmé'),
-        ('chefDep', 'Validation Chef Departement'),
-        ('refuse', 'Refusé'),
-        ('directeur', 'Validation Directeur'),
-        ('drh', 'Validation DRH'),
-        ('sg', 'Validation SG'),
-        ('ag', 'Validation AG'),
-        ('validate', 'validé'),
-        ('validated', 'validé'),
-    ], default='draft', string="Statut")
+    @api.model
+    def _selection_state(self):
+        """Surcharger la liste d'états existante et y injecter/modifier nos états."""
+        # 1) Récupérer la sélection standard (draft, confirm, validate, refuse, etc.)
+        selection = super(Demande, self)._selection_state()
+
+        # 2) Si vous voulez renommer certains états d'origine, vous pouvez
+        #    définir un dictionnaire de remplacements :
+        override_labels = {
+            'validate': 'validé',  # Par défaut : 'Confirmé par responsable'
+            'confirm': 'Confirmé',  # Par défaut : 'À approuver' ou 'To approve'
+            # Ajoutez d'autres overrides si nécessaire...
+        }
+
+        new_selection = []
+        for val, label in selection:
+            if val in override_labels:
+                label = override_labels[val]
+            new_selection.append((val, label))
+
+        # 3) Ajouter vos états personnalisés, s'ils n'existent pas déjà :
+        #    (vous pouvez personnaliser le label selon vos besoins)
+        additional_states = [
+            ('chefDep', 'Validation Chef Departement'),
+            ('directeur', 'Validation Directeur'),
+            ('drh', 'Validation DRH'),
+            ('sg', 'Validation SG'),
+            ('ag', 'Validation AG'),
+        ]
+        existing_vals = {v for v, _ in new_selection}
+        for val, label in additional_states:
+            if val not in existing_vals:
+                new_selection.append((val, label))
+
+        return new_selection
+
+    state = fields.Selection(
+        selection=_selection_state,
+        string="Statut",
+        default='draft',
+        tracking=True
+    )
+
+    # state = fields.Selection([
+    #     ('draft', 'Brouillon'),
+    #     ('confirm', 'Confirmé'),
+    #     ('chefDep', 'Validation Chef Departement'),
+    #     ('refuse', 'Refusé'),
+    #     ('directeur', 'Validation Directeur'),
+    #     ('drh', 'Validation DRH'),
+    #     ('sg', 'Validation SG'),
+    #     ('ag', 'Validation AG'),
+    #     ('validate', 'validé'),
+    #     ('validated', 'validé'),
+    # ], default='draft', string="Statut")
     type_jour = fields.Selection([
         ('jour', 'Entière'),
         ('demi-jour', 'Demi journée')

@@ -51,7 +51,7 @@
                             attrs="{'invisible': [('state', '!=', 'directeur')]}"
                             type="object" class="oe_highlight"
                             groups="vacances.group_conge_directeur"/>
-                    <field name="state" widget="statusbar" statusbar_visible="confirm,chefDep,directeur,drh,sg,ag,validate,validated"/>
+                    <field name="state" widget="statusbar" statusbar_visible="confirm,chefDep,directeur,drh,sg,ag,validate"/>
                 </header>
             </xpath>
             <xpath expr="//sheet" position="replace">
