@@ -10,7 +10,7 @@ class Demande(models.Model):
     _description = "Demande de Congé"
     _order = 'id desc'
 
-    state = fields.Selection([
+    state = fields.Selection(selection_add=[
         ('draft', 'Brouillon'),
         ('confirmer', 'Confirmé'),
         ('chefDep', 'Validation Chef Departement'),
