@@ -10,17 +10,18 @@ class Demande(models.Model):
     _description = "Demande de Congé"
     _order = 'id desc'
 
-    state = fields.Selection(selection_add=[
-        ('draft', 'To Submit'),
-        ('confirm', 'Confirmer'),
+    state = fields.Selection([
+        ('draft', 'Brouillon'),
+        ('confirm', 'Confirmé'),
         ('chefDep', 'Validation Chef Departement'),
-        ('refuse', 'Refused'),
+        ('refuse', 'Refusé'),
         ('directeur', 'Validation Directeur'),
         ('drh', 'Validation DRH'),
         ('sg', 'Validation SG'),
         ('ag', 'Validation AG'),
         ('validate', 'validé'),
-    ])
+        ('validated', 'validé'),
+    ], default='draft', string="Statut")
     type_jour = fields.Selection([
         ('jour', 'Entière'),
         ('demi-jour', 'Demi journée')
