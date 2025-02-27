@@ -47,7 +47,7 @@
 <menuitem id="menu_hr_employee_leave_dashboard"
           name="Dashboard Congés"
           parent="hr_holidays.menu_hr_holidays_root"
-          action="action_hr_employee_leave_dashboard"/>
+          action="view_hr_employee_leave_dashboard_kanban"/>
 
 
 
