@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_leave_dashboard" model="ir.ui.view">
+        <field name="name">employee.leave.dashboard.graph</field>
+        <field name="model">employee.leave.dashboard</field>
+        <field name="arch" type="xml">
+            <graph string="Tableau de Bord des Congés">
+                <field name="employee_id" group="1"/>
+                <field name="used_leave_days" type="measure"/>
+                <field name="remaining_leave_days" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <menuitem id="view_employee_leave_dashboard"
+          name="Dashboard Congés"
+          parent="hr_holidays.menu_hr_holidays_root"
+          action="action_hr_employee_leave_dashboard"/>
+</odoo>
