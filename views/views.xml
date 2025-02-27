@@ -248,7 +248,6 @@
                     <!-- Suppose que vous avez créé dans hr.leave des champs
                          computed ou related: allocated_days, used_days -->
                     <span>Alloués: <field name="allocated_days" readonly="1"/></span>
-                    &nbsp;&nbsp;|&nbsp;&nbsp;
                     <span>Pris: <field name="used_days" readonly="1"/></span>
                 </div>
             </xpath>
