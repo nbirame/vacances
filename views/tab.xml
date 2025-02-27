@@ -14,7 +14,7 @@
     <menuitem id="menu_employee_leave_dashboard"
               name="Tableau de Bord Congés"
               parent="hr_holidays.menu_hr_holidays_root"
-              action="action_employee_leave_dashboard"/>
+              action="view_employee_leave_dashboard_graph"/>
 <!--    <menuitem id="view_employee_leave_dashboard"
           name="Dashboard Congés"
           parent="hr_holidays.menu_hr_holidays_root"
