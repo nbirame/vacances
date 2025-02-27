@@ -236,6 +236,24 @@
             <xpath expr="//filter[@name='approve']" position="replace"/>
         </field>
     </record>
+    <record id="view_hr_leave_calendar_inherit" model="ir.ui.view">
+        <field name="name">hr.leave.calendar.inherit</field>
+        <field name="model">hr.leave</field>
+        <!-- On hérite de la vue calendrier par défaut -->
+        <field name="inherit_id" ref="hr_holidays.hr_leave_calendar"/>
+        <field name="arch" type="xml">
+            <!-- Exemple : insérer un texte ou des champs en haut, dans le header -->
+            <xpath expr="//header" position="inside">
+                <div style="margin-left: 1em;">
+                    <!-- Suppose que vous avez créé dans hr.leave des champs
+                         computed ou related: allocated_days, used_days -->
+                    <span>Alloués: <field name="allocated_days" readonly="1"/></span>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <span>Pris: <field name="used_days" readonly="1"/></span>
+                </div>
+            </xpath>
+        </field>
+    </record>
     <record id="action_hr_leave_chefdep_inbox" model="ir.actions.act_window">
         <field name="name">Congés à valider</field>
         <field name="res_model">hr.leave</field>
