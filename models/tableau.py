@@ -1,55 +1,62 @@
+# -*- coding: utf-8 -*-
 from odoo import models, fields, api
 
+class EmployeeVacationDashboard(models.Model):
+    _name = 'employee.vacation.dashboard'
+    _description = 'Tableau de bord des congés par employé'
+    _order = 'employee_id'
 
-class EmployeeLeaveDashboard(models.Model):
-    _name = 'employee.leave.dashboard'
-    _description = 'Tableau de Bord des Congés des Employés'
-
-    employee_id = fields.Many2one('hr.employee', string='Employé', required=True)
-    total_leave_days = fields.Float(string='Total Jours Congé', compute='_compute_leave_days')
-    used_leave_days = fields.Float(string='Jours Pris', compute='_compute_leave_days')
-    remaining_leave_days = fields.Float(string='Jours Restants', compute='_compute_leave_days')
+    employee_id = fields.Many2one(
+        'hr.employee',
+        string='Employé',
+        required=True,
+    )
+    total_allocated_days = fields.Float(
+        string='Total de congés alloués',
+        compute='_compute_vacation_data',
+        store=False
+    )
+    used_days = fields.Float(
+        string='Jours déjà pris',
+        compute='_compute_vacation_data',
+        store=False
+    )
+    remaining_days = fields.Float(
+        string='Jours restants',
+        compute='_compute_vacation_data',
+        store=False
+    )
 
     @api.depends('employee_id')
-    def _compute_leave_days(self):
+    def _compute_vacation_data(self):
+        """
+        Calcule les différents champs de congés
+        total_allocated_days: somme des allocations validées
+        used_days: somme des congés validés déjà pris
+        remaining_days: différence entre total_allocated_days et used_days
+        """
         for record in self:
-            leave_allocations = self.env['hr.leave.allocation'].search([('employee_id', '=', record.employee_id.id)])
-            leave_taken = self.env['hr.leave'].search(
-                [('employee_id', '=', record.employee_id.id), ('state', '=', 'validate')])
+            employee = record.employee_id
+            if not employee:
+                record.total_allocated_days = 0.0
+                record.used_days = 0.0
+                record.remaining_days = 0.0
+                continue
 
-            total_days = sum(leave_allocations.mapped('number_of_days'))
-            used_days = sum(leave_taken.mapped('number_of_days'))
-            remaining_days = total_days - used_days
+            # Somme des jours alloués validés (hr.leave.allocation)
+            allocations = self.env['hr.leave.allocation'].search([
+                ('employee_id', '=', employee.id),
+                ('state', '=', 'validate'),  # ou 'validate' selon la config
+            ])
+            total_allocated = sum(allocation.number_of_days for allocation in allocations)
 
-            record.total_leave_days = total_days
-            record.used_leave_days = used_days
-            record.remaining_leave_days = remaining_days
+            # Somme des jours déjà pris, validés dans hr.leave
+            leaves = self.env['hr.leave'].search([
+                ('employee_id', '=', employee.id),
+                ('state', '=', 'validate'),  # congés validés
+            ])
+            used = sum(leave.number_of_days for leave in leaves)
 
-
-class EmployeeLeaveDashboardView(models.Model):
-    _inherit = 'employee.leave.dashboard'
-
-    def get_leave_chart_data(self):
-        data = []
-        for record in self.search([]):
-            data.append({
-                'employee': record.employee_id.name,
-                'total': record.total_leave_days,
-                'used': record.used_leave_days,
-                'remaining': record.remaining_leave_days,
-            })
-        return data
-
-
-
-
-class EmployeeLeaveDashboardView(models.Model):
-    _inherit = 'employee.leave.dashboard'
-
-    def get_chart_view(self):
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'employee_leave_dashboard',
-            'context': {'leave_data': self.get_leave_chart_data()},
-        }
-
+            record.total_allocated_days = total_allocated
+            record.used_days = used
+            record.remaining_days = total_allocated - used

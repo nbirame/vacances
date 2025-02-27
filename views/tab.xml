@@ -1,24 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="action_employee_leave_dashboard_graph" model="ir.actions.act_window">
-        <field name="name">Tableau de Bord des Congés</field>
-        <field name="res_model">employee.leave.dashboard</field>
-        <field name="view_mode">graph</field>
-        <field name="view_id" ref="view_employee_leave_dashboard_graph"/>
-        <field name="help" type="html">
-            <p>Utilisez ce tableau de bord pour suivre les congés des employés.</p>
+    <!-- Action pour ouvrir le tableau de bord -->
+    <record id="action_employee_vacation_dashboard" model="ir.actions.act_window">
+        <field name="name">Tableau de bord des congés</field>
+        <field name="res_model">employee.vacation.dashboard</field>
+        <field name="view_mode">tree,graph</field>
+        <field name="help">Vue globale des congés par employé</field>
+    </record>
+
+    <!-- Menu : vous pouvez le placer dans Ressources Humaines -->
+    <menuitem
+        id="menu_employee_vacation_dashboard"
+        name="Tableau de bord congés"
+        parent="hr_holidays.menu_open_department_leave"
+        action="action_employee_vacation_dashboard"
+        sequence="20"
+    />
+
+    <!-- Vue liste (tree view) -->
+    <record id="view_employee_vacation_tree" model="ir.ui.view">
+        <field name="name">employee.vacation.dashboard.tree</field>
+        <field name="model">employee.vacation.dashboard</field>
+        <field name="arch" type="xml">
+            <tree string="Tableau de bord congés">
+                <field name="employee_id"/>
+                <field name="total_allocated_days"/>
+                <field name="used_days"/>
+                <field name="remaining_days"/>
+            </tree>
         </field>
     </record>
-    <menuitem id="menu_employee_leave_dashboard"
+
+    <!-- Vue graphique (diagramme) -->
+    <record id="view_employee_vacation_graph" model="ir.ui.view">
+        <field name="name">employee.vacation.dashboard.graph</field>
+        <field name="model">employee.vacation.dashboard</field>
+        <field name="arch" type="xml">
+            <graph string="Statistiques de congés" type="bar">
+                <!-- Axe des X: Employés  -->
+                <field name="employee_id" type="row"/>
+
+                <!-- Axes des Y: Valeurs numériques -->
+                <field name="total_allocated_days" type="measure"/>
+                <field name="used_days" type="measure"/>
+                <field name="remaining_days" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <menuitem id="action_employee_vacation_dashboard"
               name="Tableau de Bord Congés"
               parent="hr_holidays.menu_hr_holidays_root"
               action="action_employee_leave_dashboard_graph"/>
-    <!--<menuitem id="menu_employee_leave_dashboard"
-              name="Tableau de Bord Congés"
-              parent="hr_holidays.menu_hr_holidays_root"
-              action="view_employee_leave_dashboard_graph"/>-->
-<!--    <menuitem id="view_employee_leave_dashboard"
-          name="Dashboard Congés"
-          parent="hr_holidays.menu_hr_holidays_root"
-          action="action_hr_employee_leave_dashboard"/>-->
 </odoo>
