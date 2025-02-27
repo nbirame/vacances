@@ -8,11 +8,11 @@
         <field name="help">Vue globale des congés par employé</field>
     </record>
 
-    <!-- Menu : vous pouvez le placer dans Ressources Humaines -->
+    <!-- Menu : on l’attache à la racine des congés -->
     <menuitem
         id="menu_employee_vacation_dashboard"
         name="Tableau de bord congés"
-        parent="hr_holidays.menu_open_department_leave"
+        parent="hr_holidays.menu_hr_holidays_root"
         action="action_employee_vacation_dashboard"
         sequence="20"
     />
@@ -37,18 +37,12 @@
         <field name="model">employee.vacation.dashboard</field>
         <field name="arch" type="xml">
             <graph string="Statistiques de congés" type="bar">
-                <!-- Axe des X: Employés  -->
                 <field name="employee_id" type="row"/>
-
-                <!-- Axes des Y: Valeurs numériques -->
                 <field name="total_allocated_days" type="measure"/>
                 <field name="used_days" type="measure"/>
                 <field name="remaining_days" type="measure"/>
             </graph>
         </field>
     </record>
-    <menuitem id="action_employee_vacation_dashboard"
-              name="Tableau de Bord Congés"
-              parent="hr_holidays.menu_hr_holidays_root"
-              action="action_employee_leave_dashboard_graph"/>
+
 </odoo>
