@@ -249,6 +249,7 @@
                          computed ou related: allocated_days, used_days -->
                     <span>Alloués: <field name="allocated_days" readonly="1"/></span>
                     <span>Pris: <field name="used_days" readonly="1"/></span>
+                    <span>Restant: <field name="remaining_days" readonly="1"/></span>
                 </div>
             </xpath>
         </field>
