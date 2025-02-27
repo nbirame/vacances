@@ -18,16 +18,10 @@
             </xpath>
         </field>
     </record>
-
-    <!-- Action pour ouvrir le rapport, en vue Graph par défaut -->
     <record id="action_hr_leave_report_graph" model="ir.actions.act_window">
         <field name="name">Tableau de Bord des Congés</field>
         <field name="res_model">hr.leave.report</field>
-        <!-- On indique qu'on veut d'abord afficher la vue Graph -->
         <field name="view_mode">graph</field>
-        <!-- Pas obligatoire, mais on peut laisser Odoo choisir la vue adaptée.
-             Si vous voulez forcer cette vue précise, vous pouvez pointer dessus : -->
-        <!-- <field name="view_id" ref="hr_leave_report_pivot_inherit"/> -->
         <field name="domain">[('user_id', '=', user.id)]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -38,8 +32,6 @@
             </p>
         </field>
     </record>
-
-    <!-- Menu pour accéder au rapport -->
     <menuitem
         id="menu_dashbord_cong"
         action="action_hr_leave_report_graph"
