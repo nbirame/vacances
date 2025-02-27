@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_hr_employee_leave_dashboard_tree" model="ir.ui.view">
+    <record id="view_hr_employee_leave_dashboard_kanban" model="ir.ui.view">
+        <field name="name">hr.employee.leave.dashboard.kanban</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="allocated_days"/>
+                <field name="used_days"/>
+                <field name="remaining_days"/>
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div>
+                                <strong><field name="name"/></strong>
+                            </div>
+                            <div>Alloué : <field name="allocated_days"/></div>
+                            <div>Pris : <field name="used_days"/></div>
+                            <div>Restant : <field name="remaining_days"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!--<record id="view_hr_employee_leave_dashboard_tree" model="ir.ui.view">
         <field name="name">hr.employee.leave.dashboard.tree</field>
         <field name="model">hr.employee</field>
         <field name="arch" type="xml">
@@ -17,7 +42,7 @@
         <field name="res_model">hr.employee</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
-    </record>
+    </record>-->
 
 <menuitem id="menu_hr_employee_leave_dashboard"
           name="Dashboard Congés"
