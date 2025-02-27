@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_employee_leave_dashboard_graph" model="ir.ui.view">
-        <field name="name">employee.leave.dashboard.graph</field>
-        <field name="model">employee.leave.dashboard</field>
-        <field name="arch" type="xml">
-            <graph string="Tableau de Bord des Congés">
-                <field name="employee_id" group="1"/>
-                <field name="used_leave_days" type="measure"/>
-                <field name="remaining_leave_days" type="measure"/>
-            </graph>
+    <record id="action_employee_leave_dashboard_graph" model="ir.actions.act_window">
+        <field name="name">Tableau de Bord des Congés</field>
+        <field name="res_model">employee.leave.dashboard</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_employee_leave_dashboard_graph"/>
+        <field name="help" type="html">
+            <p>Utilisez ce tableau de bord pour suivre les congés des employés.</p>
         </field>
     </record>
     <menuitem id="menu_employee_leave_dashboard"
               name="Tableau de Bord Congés"
               parent="hr_holidays.menu_hr_holidays_root"
-              action="view_employee_leave_dashboard_graph"/>
+              action="action_employee_leave_dashboard_graph"/>
+    <!--<menuitem id="menu_employee_leave_dashboard"
+              name="Tableau de Bord Congés"
+              parent="hr_holidays.menu_hr_holidays_root"
+              action="view_employee_leave_dashboard_graph"/>-->
 <!--    <menuitem id="view_employee_leave_dashboard"
           name="Dashboard Congés"
           parent="hr_holidays.menu_hr_holidays_root"
