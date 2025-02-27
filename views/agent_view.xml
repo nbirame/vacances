@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_employee_leave_dashboard_tree" model="ir.ui.view">
+        <field name="name">hr.employee.leave.dashboard.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="arch" type="xml">
+            <tree string="Dashboard Congés">
+                <field name="name"/>
+                <field name="allocated_days"/>
+                <field name="used_days"/>
+                <field name="remaining_days"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_hr_employee_leave_dashboard" model="ir.actions.act_window">
+        <field name="name">Tableau de bord Congés</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+    </record>
+
+<menuitem id="menu_hr_employee_leave_dashboard"
+          name="Dashboard Congés"
+          parent="hr_holidays.menu_hr_holidays_root"
+          action="action_hr_employee_leave_dashboard"/>
+
+
+
+</odoo>
