@@ -285,12 +285,12 @@
           name="Demande de congés à valider"
           parent="hr_holidays.menu_hr_holidays_root"
           groups="vacances.group_conge_sg"
-          action="action_hr_leave_drh_inbox"/>
+          action="action_hr_leave_sg_inbox"/>
     <menuitem id="menu_hr_leave_ag_inbox"
           name="Demande de congés à valider"
           parent="hr_holidays.menu_hr_holidays_root"
           groups="vacances.group_conge_AG"
-          action="action_hr_leave_chefdep_inbox"/>
+          action="action_hr_leave_ag_inbox"/>
 
 
 </odoo>
