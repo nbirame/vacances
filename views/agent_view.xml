@@ -20,10 +20,10 @@
                 <graph string="Tableau de bord Congés" type="pie">
                     <!-- On déclare ce que l’on mesure (ex. allocated_days, used_days, etc.)
                          et sur quelle dimension on regroupe (ex. name, pour par employé). -->
-                    <field name="allocated_days" type="measure"/>
-                    <field name="used_days" type="measure"/>
-                    <!--<field name="remaining_days" type="measure"/>-->
-                    <field name="name" type="row"/>
+                    <field name="allocated_days"/>
+                    <field name="used_days"/>
+                    <field name="remaining_days"/>
+                    <field name="name"/>
                 </graph>
             </field>
         </record>
