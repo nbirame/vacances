@@ -16,14 +16,10 @@
             <field name="name">hr.employee.leave.dashboard.graph</field>
             <field name="model">hr.employee</field>
             <field name="arch" type="xml">
-                <!-- type="pie" pour le diagramme camembert -->
                 <graph string="Tableau de bord Congés" type="bar">
-                    <!-- On déclare ce que l’on mesure (ex. allocated_days, used_days, etc.)
-                         et sur quelle dimension on regroupe (ex. name, pour par employé). -->
-                    <field name="allocated_days"/>
-                    <field name="used_days"/>
-                    <field name="remaining_days"/>
-                    <field name="name"/>
+                    <field name="allocated_days" type="col"/>
+                    <field name="used_days" type="measure"/>
+                    <field name="remaining_days" type="measure"/>
                 </graph>
             </field>
         </record>
