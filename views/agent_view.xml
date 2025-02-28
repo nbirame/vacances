@@ -22,7 +22,7 @@
                          et sur quelle dimension on regroupe (ex. name, pour par employé). -->
                     <field name="allocated_days" type="measure"/>
                     <field name="used_days" type="measure"/>
-                    <field name="remaining_days" type="measure"/>
+                    <!--<field name="remaining_days" type="measure"/>-->
                     <field name="name" type="row"/>
                 </graph>
             </field>
