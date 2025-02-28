@@ -34,22 +34,22 @@
                     <button name="action_validate" string="VALIDER" states="ag" type="object" class="oe_highlight"
                             groups="vacances.group_conge_AG"/>
                     <button name="action_annuler" string="Refuser" attrs="{'invisible': [('state', '!=', 'drh')]}"
-                            type="object" class="oe_highlight" groups="vacances.group_conge_drh"/>
+                            type="object" class="oe_highlight btn btn-danger" groups="vacances.group_conge_drh"/>
                     <button name="action_annuler" string="Refuser" attrs="{'invisible': [('state', '!=', 'sg')]}"
-                            type="object" class="oe_highlight" groups="vacances.group_conge_sg"/>
+                            type="object" class="oe_highlight btn btn-danger" groups="vacances.group_conge_sg"/>
                     <button name="action_annuler" string="Refuser" attrs="{'invisible': [('state', '!=', 'ag')]}"
-                            type="object" class="oe_highlight" groups="vacances.group_conge_AG"/>
+                            type="object" class="oe_highlight btn btn-danger" groups="vacances.group_conge_AG"/>
                     <button name="action_annuler" string="Refuser"
                             attrs="{'invisible': [('state', 'not in', ('chef','validate1'))]}"
-                            type="object" class="oe_highlight"
+                            type="object" class="oe_highlight btn btn-danger"
                             groups="vacances.group_conge_chef_service,vacances.group_conge_responsable"/>
                     <button name="action_annuler" string="Refuser"
                             attrs="{'invisible': [('state', '!=', 'chefDep')]}"
-                            type="object" class="oe_highlight"
+                            type="object" class="oe_highlight btn btn-danger"
                             groups="vacances.group_conge_chef_service"/>
                     <button name="action_annuler" string="Refuser"
                             attrs="{'invisible': [('state', '!=', 'directeur')]}"
-                            type="object" class="oe_highlight"
+                            type="object" class="oe_highlight btn btn-danger"
                             groups="vacances.group_conge_directeur"/>
                     <field name="state" widget="statusbar" statusbar_visible="confirm,chefDep,directeur,drh,sg,ag,validate"/>
                 </header>
