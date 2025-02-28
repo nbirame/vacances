@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="inherit_hr_holidays_dashboard_calendar_header"
+                  inherit_id="hr_holidays.dashboard_calendar_header">
+            <!-- On se place dans le conteneur principal -->
+            <xpath expr="//div[@class='o_timeoff_container d-flex']" position="inside">
+                <!-- Votre bloc supplémentaire -->
+                <div class="o_timeoff_extra_info mt-2">
+                    <p>
+                        <strong>Jours alloués&nbsp;:</strong>
+                        <!-- 'max_leaves' indique souvent la limite totale de congés alloués -->
+                        <span t-esc="timeoff[1]['max_leaves']"/>
+                    </p>
+                    <p>
+                        <strong>Jours déjà pris&nbsp;:</strong>
+                        <!-- 'virtual_leaves_taken' indique en général le nombre de jours pris -->
+                        <span t-esc="timeoff[1]['virtual_leaves_taken']"/>
+                    </p>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>
