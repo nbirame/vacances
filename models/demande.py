@@ -32,10 +32,10 @@ class Demande(models.Model):
         string='Nombre de jours déjà pris',
         store=False
     )
-    remaining_days = fields.Float(
-        string='Nombre de jours restants',
-        store=False
-    )
+    # remaining_days = fields.Float(
+    #     string='Nombre de jours restants',
+    #     store=False
+    # )
 
     @api.model_create_multi
     def create(self, vals_list):
