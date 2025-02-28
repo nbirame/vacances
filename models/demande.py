@@ -28,6 +28,14 @@ class Demande(models.Model):
     )
     can_validate = fields.Boolean('Can Validate', compute='_compute_can_validate')
     allocated_days = fields.Float(string="Jours alloués")
+    used_days = fields.Float(
+        string='Nombre de jours déjà pris',
+        store=False
+    )
+    remaining_days = fields.Float(
+        string='Nombre de jours restants',
+        store=False
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
