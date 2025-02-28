@@ -12,27 +12,26 @@
             </tree>
         </field>
     </record>
-   <record id="view_hr_employee_leave_dashboard" model="ir.ui.view">
-    <field name="name">hr.employee.leave.dashboard</field>
+   <record id="view_hr_employee_leave_kanban" model="ir.ui.view">
+    <field name="name">hr.employee.leave.kanban</field>
     <field name="model">hr.employee</field>
     <field name="arch" type="xml">
         <kanban>
-            <dashboard>
-                <graph string="Jours alloués par employé" type="pie">
-                    <field name="allocated_days" type="measure"/>
-                    <field name="name" type="col"/>
-                </graph>
-
-                <graph string="Jours utilisés par employé" type="pie">
-                    <field name="used_days" type="measure"/>
-                    <field name="name" type="col"/>
-                </graph>
-
-                <graph string="Jours restants par employé" type="pie">
-                    <field name="remaining_days" type="measure"/>
-                    <field name="name" type="col"/>
-                </graph>
-            </dashboard>
+            <field name="name"/>
+            <field name="allocated_days"/>
+            <field name="used_days"/>
+            <field name="remaining_days"/>
+            <template>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_details">
+                        <field name="allocated_days"/>
+                        <div>
+                             <field name="used_days"/>
+                            <field name="remaining_days"/>
+                        </div>
+                    </div>
+                </t>
+            </template>
         </kanban>
     </field>
 </record>
