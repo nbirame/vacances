@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_hr_employee_leave_dashboard_tree" model="ir.ui.view">
+    <!--<record id="view_hr_employee_leave_dashboard_tree" model="ir.ui.view">
         <field name="name">hr.employee.leave.dashboard.tree</field>
         <field name="model">hr.employee</field>
         <field name="arch" type="xml">
@@ -11,7 +11,23 @@
                 <field name="remaining_days"/>
             </tree>
         </field>
-    </record>
+    </record>-->
+    <record id="view_hr_employee_leave_dashboard_graph" model="ir.ui.view">
+            <field name="name">hr.employee.leave.dashboard.graph</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <!-- type="pie" pour le diagramme camembert -->
+                <graph string="Tableau de bord Congés" type="pie">
+                    <!-- On déclare ce que l’on mesure (ex. allocated_days, used_days, etc.)
+                         et sur quelle dimension on regroupe (ex. name, pour par employé). -->
+                    <field name="allocated_days" type="measure"/>
+                    <field name="used_days" type="measure"/>
+                    <field name="remaining_days" type="measure"/>
+                    <field name="name" type="row"/>
+                </graph>
+            </field>
+        </record>
+
     <record id="action_hr_employee_leave_dashboard" model="ir.actions.act_window">
         <field name="name">Tableau de bord Congés</field>
         <field name="res_model">hr.employee</field>
