@@ -17,9 +17,10 @@
             <field name="model">hr.employee</field>
             <field name="arch" type="xml">
                 <graph string="Tableau de bord Congés" type="bar">
-                    <field name="allocated_days" type="col"/>
+                    <field name="allocated_days" type="measure"/>
                     <field name="used_days" type="measure"/>
                     <field name="remaining_days" type="measure"/>
+                    <field name="name" type="col"/>
                 </graph>
             </field>
         </record>
