@@ -7,17 +7,17 @@ class EmployeeInherit(models.Model):
     allocated_days = fields.Float(
         string='Nombre total de jours alloués',
         compute='_compute_leave_info',
-        store=False  # ou True si vous voulez stocker en BDD
+        store=True  # ou True si vous voulez stocker en BDD
     )
     used_days = fields.Float(
         string='Nombre de jours déjà pris',
         compute='_compute_leave_info',
-        store=False
+        store=True
     )
     remaining_days = fields.Float(
         string='Nombre de jours restants',
         compute='_compute_leave_info',
-        store=False
+        store=True
     )
 
     @api.depends()
