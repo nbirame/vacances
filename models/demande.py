@@ -27,6 +27,7 @@ class Demande(models.Model):
     ], store=True, tracking=True, copy=False, string="Journée"
     )
     can_validate = fields.Boolean('Can Validate', compute='_compute_can_validate')
+    allocated_days = fields.Float(string="Jours alloués")
 
     @api.model_create_multi
     def create(self, vals_list):
