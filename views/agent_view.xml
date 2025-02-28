@@ -17,7 +17,7 @@
             <field name="model">hr.employee</field>
             <field name="arch" type="xml">
                 <!-- type="pie" pour le diagramme camembert -->
-                <graph string="Tableau de bord Congés" type="pie">
+                <graph string="Tableau de bord Congés" type="bar">
                     <!-- On déclare ce que l’on mesure (ex. allocated_days, used_days, etc.)
                          et sur quelle dimension on regroupe (ex. name, pour par employé). -->
                     <field name="allocated_days"/>
