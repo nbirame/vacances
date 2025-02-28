@@ -29,8 +29,7 @@
     <field name="arch" type="xml">
         <graph string="Répartition des congés" type="pie">
             <field name="remaining_days" type="measure"/>
-            <field name="allocated_days" type="measure"/>
-            <field name="name" type="col"/>
+            <field name="allocated_days" type="col"/>
         </graph>
     </field>
 </record>
