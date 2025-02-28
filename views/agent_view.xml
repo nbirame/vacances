@@ -16,7 +16,7 @@
         <field name="name">Tableau de bord Congés</field>
         <field name="res_model">hr.employee</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[]</field>
+        <field name="domain">[('user_id','=',uid)]</field>
     </record>
 
 <menuitem id="menu_hr_employee_leave_dashboard"
