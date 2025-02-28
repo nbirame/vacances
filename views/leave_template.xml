@@ -8,12 +8,12 @@
                 <!-- Votre bloc supplémentaire -->
                 <div class="o_timeoff_extra_info mt-2">
                     <p>
-                        <strong>Jours alloués&nbsp;:</strong>
+                        <strong>Jours alloués:</strong>
                         <!-- 'max_leaves' indique souvent la limite totale de congés alloués -->
                         <span t-esc="timeoff[1]['max_leaves']"/>
                     </p>
                     <p>
-                        <strong>Jours déjà pris&nbsp;:</strong>
+                        <strong>Jours déjà pris:</strong>
                         <!-- 'virtual_leaves_taken' indique en général le nombre de jours pris -->
                         <span t-esc="timeoff[1]['virtual_leaves_taken']"/>
                     </p>
