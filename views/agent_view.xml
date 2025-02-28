@@ -12,43 +12,35 @@
             </tree>
         </field>
     </record>
-   <record id="view_hr_employee_leave_dashboard_graph_allocated" model="ir.ui.view">
-    <field name="name">hr.employee.leave.dashboard.graph.allocated</field>
+   <record id="view_hr_employee_leave_dashboard" model="ir.ui.view">
+    <field name="name">hr.employee.leave.dashboard</field>
     <field name="model">hr.employee</field>
     <field name="arch" type="xml">
-        <graph string="Jours alloués par employé" type="pie">
-            <field name="allocated_days" type="measure"/>
-            <field name="name" type="col"/>
-        </graph>
-    </field>
-</record>
+        <kanban>
+            <dashboard>
+                <graph string="Jours alloués par employé" type="pie">
+                    <field name="allocated_days" type="measure"/>
+                    <field name="name" type="col"/>
+                </graph>
 
-<record id="view_hr_employee_leave_dashboard_graph_used" model="ir.ui.view">
-    <field name="name">hr.employee.leave.dashboard.graph.used</field>
-    <field name="model">hr.employee</field>
-    <field name="arch" type="xml">
-        <graph string="Jours utilisés par employé" type="pie">
-            <field name="used_days" type="measure"/>
-            <field name="name" type="col"/>
-        </graph>
-    </field>
-</record>
+                <graph string="Jours utilisés par employé" type="pie">
+                    <field name="used_days" type="measure"/>
+                    <field name="name" type="col"/>
+                </graph>
 
-<record id="view_hr_employee_leave_dashboard_graph_remaining" model="ir.ui.view">
-    <field name="name">hr.employee.leave.dashboard.graph.remaining</field>
-    <field name="model">hr.employee</field>
-    <field name="arch" type="xml">
-        <graph string="Jours restants par employé" type="pie">
-            <field name="remaining_days" type="measure"/>
-            <field name="name" type="col"/>
-        </graph>
+                <graph string="Jours restants par employé" type="pie">
+                    <field name="remaining_days" type="measure"/>
+                    <field name="name" type="col"/>
+                </graph>
+            </dashboard>
+        </kanban>
     </field>
 </record>
 
     <record id="action_hr_employee_leave_dashboard" model="ir.actions.act_window">
         <field name="name">Tableau de bord Congés</field>
         <field name="res_model">hr.employee</field>
-        <field name="view_mode">graph,tree,form</field>
+        <field name="view_mode">kanban,tree,form</field>
         <field name="domain">[('user_id','=',uid)]</field>
     </record>
 
