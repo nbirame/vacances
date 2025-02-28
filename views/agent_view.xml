@@ -12,19 +12,28 @@
             </tree>
         </field>
     </record>
-    <record id="view_hr_employee_leave_dashboard_graph" model="ir.ui.view">
+   <!-- <record id="view_hr_employee_leave_dashboard_graph" model="ir.ui.view">
             <field name="name">hr.employee.leave.dashboard.graph</field>
             <field name="model">hr.employee</field>
             <field name="arch" type="xml">
-                <graph string="Tableau de bord Congés" type="bar">
-                    <field name="allocated_days" type="measure"/>
+                <graph string="Tableau de bord Congés" type="pie">
+                    <field name="allocated_days" type="col"/>
                     <field name="used_days" type="measure"/>
                     <field name="remaining_days" type="measure"/>
-                    <field name="name" type="col"/>
                 </graph>
             </field>
-        </record>
-
+        </record>-->
+    <record id="view_hr_employee_leave_pie" model="ir.ui.view">
+    <field name="name">hr.employee.leave.pie.chart</field>
+    <field name="model">hr.employee</field>
+    <field name="arch" type="xml">
+        <graph string="Répartition des congés" type="pie">
+            <field name="remaining_days" type="measure"/>
+            <field name="allocated_days" type="measure"/>
+            <field name="name" type="col"/>
+        </graph>
+    </field>
+</record>
     <record id="action_hr_employee_leave_dashboard" model="ir.actions.act_window">
         <field name="name">Tableau de bord Congés</field>
         <field name="res_model">hr.employee</field>
