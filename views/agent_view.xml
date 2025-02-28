@@ -24,8 +24,10 @@
             <template>
                 <t t-name="kanban-box">
                     <div class="oe_kanban_details">
-                        <field name="allocated_days"/>
-                        <div>
+                        <strong class="o_kanban_record_title">
+                            <field name="allocated_days"/>
+                        </strong>
+                        <div class="o_kanban_tags_section">
                              <field name="used_days"/>
                             <field name="remaining_days"/>
                         </div>
