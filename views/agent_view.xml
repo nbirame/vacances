@@ -24,16 +24,14 @@
             </field>
         </record>-->
     <record id="view_hr_employee_leave_pie" model="ir.ui.view">
-    <field name="name">hr.employee.leave.pie.chart</field>
+    <field name="name">hr.employee.leave.graph</field>
     <field name="model">hr.employee</field>
     <field name="arch" type="xml">
         <graph string="Répartition des congés" type="bar">
             <field name="allocated_days"/>
-            <field name="name" type="col"/>
         </graph>
         <graph string="Répartition des congés" type="bar">
             <field name="remaining_days"/>
-            <field name="name" type="col"/>
         </graph>
     </field>
 </record>
