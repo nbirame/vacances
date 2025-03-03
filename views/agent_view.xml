@@ -46,11 +46,11 @@
             <div class="o_kanban_record_top">
                 <div class="o_kanban_record_headings">
                     <strong class="o_kanban_record_title">
-                        <field name="name" placeholder="Employee's Name"/>
+                        <span>Nombre de jours de congé</span>
                     </strong>
-                    <span>Acquis: <field name="allocated_days"/></span>
-                    <span>Déjà pris:
-<field name="used_days"/></span>
+                    <br/>
+                    <span>Acquis: <field name="allocated_days"/></span><br/>
+                    <span>Déjà pris: <field name="used_days"/></span><br/>
                     <span>Restant: <field name="remaining_days"/></span>
                 </div>
             </div>
