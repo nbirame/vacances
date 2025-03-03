@@ -29,7 +29,11 @@
                         </strong>
                         <div class="o_kanban_tags_section">
                              <field name="used_days"/>
-                            <field name="remaining_days"/>
+                        </div>
+                        <div class="o_kanban_record_bottom">
+                            <div class="oe_kanban_bottom_left">
+                                <field name="remaining_days"/>
+                            </div>
                         </div>
                     </div>
                 </t>
