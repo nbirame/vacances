@@ -17,10 +17,10 @@
     <field name="model">hr.employee</field>
     <field name="arch" type="xml">
         <kanban>
-            <field name="name"/>
+            <!--<field name="name"/>
             <field name="allocated_days"/>
             <field name="used_days"/>
-            <field name="remaining_days"/>
+            <field name="remaining_days"/>-->
             <template>
                 <t t-name="kanban-box">
                     <div class="oe_kanban_details">
