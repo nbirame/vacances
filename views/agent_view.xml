@@ -56,65 +56,12 @@
                                <div class="o_kanban_record_top">
                                    <div class="o_kanban_record_headings">
                                        <strong class="o_kanban_record_title">
-                                            <div class="float-right"
-                                                 t-if="record.hr_icon_display.raw_value == 'presence_present'"
-                                                 name="presence_present">
-                                                <!-- Employee is present/connected and it is normal according to his work schedule  -->
-                                                <span class="fa fa-circle text-success" role="img" aria-label="Present"
-                                                      title="Present" name="presence_present">
-                                                </span>
-                                            </div>
-                                            <div class="float-right"
-                                                 t-if="record.hr_icon_display.raw_value == 'presence_absent'"
-                                                 name="presence_absent">
-                                                <!-- Employee is not present and it is normal according to his work schedule -->
-                                                <span class="fa fa-circle-o text-muted" role="img" aria-label="Absent"
-                                                      title="Absent" name="presence_absent">
-                                                </span>
-                                            </div>
-                                            <div class="float-right"
-                                                 t-if="record.hr_icon_display.raw_value == 'presence_absent_active'"
-                                                    name="presence_absent_active">
-                                                <!-- Employee is connected but according to his work schedule,
-                                                     he should not work for now  -->
-                                                <span class="fa fa-circle-o text-success" role="img"
-                                                      aria-label="Present but not active"
-                                                      title="Present but not active"
-                                                      name="presence_absent_active">
-                                                </span>
-                                            </div>
-                                            <div class="float-right"
-                                                 t-if="record.hr_icon_display.raw_value == 'presence_to_define'"
-                                                    name="presence_to_define">
-                                                <!-- Employee is not here but according to his work schedule, he should be connected -->
-                                                <span class="fa fa-circle text-warning" role="img"
-                                                      aria-label="To define" title="To define"
-                                                      name="presence_to_define">
-                                                </span>
-                                            </div>
                                             <field name="name" placeholder="Employee's Name"/>
                                        </strong>
-                                       <span t-if="record.job_title.raw_value" class="o_kanban_record_subtitle"><field name="job_title"/></span>
+                                       <span class="o_kanban_record_subtitle"><field name="job_title"/></span>
                                        <span><field name="allocated_days"/></span>
                                        <span><field name="used_days"/></span>
                                        <span><field name="remaining_days"/></span>
-                                   </div>
-                               </div>
-                               <field name="category_ids" widget="many2many_tags" options="{'color_field': 'color'}" groups="hr.group_hr_manager"/>
-                               <ul>
-                                   <li id="last_login"/>
-                                   <li t-if="record.work_email.raw_value" class="o_text_overflow"><field name="work_email" /></li>
-                                   <li t-if="record.work_phone.raw_value" class="o_force_ltr"><field name="work_phone" /></li>
-                               </ul>
-                           </div>
-                           <div class="oe_kanban_content position-absolute fixed-bottom mr-2 o_hr_employee_kanban_bottom">
-                               <div class="o_kanban_record_bottom">
-                                   <div class="oe_kanban_bottom_left"/>
-                                   <div class="oe_kanban_bottom_right float-right">
-                                       <a title="Chat" icon="fa-comments" href="#" class="ml8 o_employee_chat_btn" attrs="{'invisible': [('user_id','=', False)]}" role="button"><i class="fa fa-comments"/></a>
-                                       <div class="hr_activity_container">
-                                           <field name="activity_ids" widget="kanban_activity"/>
-                                       </div>
                                    </div>
                                </div>
                            </div>
