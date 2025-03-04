@@ -39,7 +39,7 @@ class EmployeeInherit(models.Model):
             #    sur les congés validés.
             leaves_taken = self.env['hr.leave'].search([
                 ('employee_id', '=', employee.id),
-                ('state', '=', 'validate'),  # 'validate' = congés validés
+                ('state', 'in', ['drh','sg','ag','directeur','validate']),  # 'validate' = congés validés
             ])
             total_used = sum(leave.number_of_days for leave in leaves_taken)
 
