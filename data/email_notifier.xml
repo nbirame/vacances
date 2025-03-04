@@ -26,7 +26,7 @@
         <record id="email_template_reponse_conge" model="mail.template">
             <field name="name">Demande de Congé</field>
             <field name="email_from">fongip@fongip.sn</field>
-            <field name="email_to">{{ object.user_id.work_email }}</field>
+            <field name="email_to">{{object.user_id.work_email }}</field>
             <field name="subject">Demande de Congé {{object.user_id.name or ''}}</field>
             <field name="model_id" ref="hr_holidays.model_hr_leave"/>
             <field name="auto_delete" eval="True"/>
@@ -40,10 +40,10 @@
                         ]]>
             </field>
         </record>
-        <record id="email_template_chefService_conge" model="mail.template">
+        <record id="email_template_chefDep_conge" model="mail.template">
             <field name="name">Demande de Congé</field>
             <field name="email_from">fongip@fongip.sn</field>
-            <field name="email_to">{{ object.user_id.employee_parent_id.work_email or '' }}</field>
+            <field name="email_to">{{object.user_id.employee_parent_id.work_email or '' }}</field>
             <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
             <field name="model_id" ref="hr_holidays.model_hr_leave"/>
             <!--<field name="report_template" ref="mission.report_mission_delegation_equipe"/>-->
@@ -61,7 +61,7 @@
                         ]]>
             </field>
         </record>
-        <record id="email_template_chefDep_conge" model="mail.template">
+        <record id="email_template_directeur_conge" model="mail.template">
             <field name="name">Demande de Congé</field>
             <field name="email_from">fongip@fongip.sn</field>
             <field name="email_to">{{object.user_id.employee_parent_id.work_email or

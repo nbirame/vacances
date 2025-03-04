@@ -115,7 +115,7 @@ class Demande(models.Model):
             self.action_send_email_notifier("email_template_drh_conge")
         elif user.has_group('vacances.group_conge_chef_service'):
             self.update({'state': 'directeur'})
-            self.action_send_email_notifier("email_template_chefDep_conge")
+            self.action_send_email_notifier("email_template_directeur_conge")
         elif user.has_group('vacances.group_conge_drh'):
             self.sudo().write({'state': 'sg'})
             self.action_send_email_notifier("email_template_SG_conge")
@@ -126,6 +126,7 @@ class Demande(models.Model):
             self.sudo().write({'state': 'validate'})
         else:
             self.sudo().write({'state': 'chefDep'})
+            self.action_send_email_notifier("email_template_chefDep_conge")
         # self.sudo().write({'state': 'chefDep'})
         holidays = self.filtered(lambda leave: leave.validation_type == 'no_validation')
         if holidays:
@@ -158,13 +159,14 @@ class Demande(models.Model):
 
     def action_chefDep(self):
         self.write({'state': 'directeur'})
-        self.action_send_email_notifier("email_template_drh_conge")
+        self.action_send_email_notifier("email_template_directeur_conge") # email_template_drh_conge
         # self.action_send_email_notifier("email_template_chefDep_conge")
 
     def action_draft(self):
         self.write({'state': 'draft'})
 
     def action_directeur(self):
+        self.action_send_email_notifier("email_template_drh_conge")
         self.write({'state': 'drh'})
 
     def action_validate(self):
