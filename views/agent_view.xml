@@ -16,6 +16,7 @@
     <field name="name">hr.employee.kanban</field>
     <field name="model">hr.employee</field>
     <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+    <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]" />
     <field name="priority">10</field>
     <field name="arch" type="xml">
         <!-- Utilisation de XPath pour ajouter du contenu sans remplacer toute la vue -->
