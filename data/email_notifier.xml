@@ -14,9 +14,13 @@
                      <span t-out="object.manager_id.name or ''"></span> l'agent
                      <span t-out="object.user_id.name or ''"></span><br/>
                      <p>A fait une demande de congé du</p><br/>
-                     <span t-out="object.date_from or ''"></span> au
-                     <span t-out="object.date_to or ''"></span><br/>
-                     <!--<span t-out="object.get_url(object.id) or ''"></span>-->
+                     <span t-if="object.date_from">
+                        <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span>
+                     </span> au
+                     <span t-if="object.date_from">
+                        <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span>
+                     </span>
+                     <br/>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -50,8 +54,13 @@
                     <div>Bonjour,<br/>
                      <span t-out="object.get_chefDepartment()[0] or ''"></span><br/>
                      <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé</p>
-                     <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span> au
-                     <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span><br/>
+                     <span t-if="object.date_from">
+                        <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span>
+                     </span> au
+                     <span t-if="object.date_from">
+                        <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span>
+                     </span>
+                     <br/>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -67,9 +76,13 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour Directeur,<br/>
                      <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
-                     <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span> au
-                     <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span><br/>
-                     <!--<span t-out="object.get_url(object.id) or ''"></span>-->
+                     <span t-if="object.date_from">
+                        <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span>
+                     </span> au
+                     <span t-if="object.date_from">
+                        <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span>
+                     </span>
+                     <br/>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -85,9 +98,13 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour DRH,
                          <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
-                         <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span> au
-                         <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span><br/>
-                         <!--<span t-out="object.get_url(object.id) or ''"></span>
+                         <span t-if="object.date_from">
+                            <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span>
+                         </span> au
+                         <span t-if="object.date_from">
+                            <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span>
+                         </span>
+                            <br/>
                          <p>Cliquer sur le lien ci-dessous</p></br>-->
                          <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
@@ -104,9 +121,13 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour SG, <br/>
                      <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
-                     <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span> au
-                     <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span><br/>
-                    <!-- <span t-out="object.get_url(object.id) or ''"></span>-->
+                    <span t-if="object.date_from">
+                        <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span>
+                     </span> au
+                     <span t-if="object.date_from">
+                        <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span>
+                     </span>
+                        <br/>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -122,8 +143,13 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour AG, <br/>
                      <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
-                     <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span> au
-                     <span t-out="object.date_to..strftime('%d/%m/%Y') or ''"></span><br/>
+                     <span t-if="object.date_from">
+                        <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span>
+                     </span> au
+                     <span t-if="object.date_from">
+                        <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span>
+                     </span>
+                      <br/>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
