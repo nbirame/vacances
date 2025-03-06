@@ -391,11 +391,12 @@ class Demande(models.Model):
         user = self.env['res.users'].sudo().search([('employee_id', '=', current_employee)], limit=1)
         # for user in users:
         if user.has_group('vacances.group_service'):
-            nom_email.append(user.employee_parent_id.parent_id.user_id.name, user.employee_parent_id.parent_id.user_id.work_email)
+            nom_email.append(user.employee_parent_id.parent_id.user_id.name)
+            nom_email.append(user.employee_parent_id.parent_id.user_id.work_email)
             return nom_email
         else:
-            nom_email.append(user.employee_parent_id.name,
-                             user.employee_parent_id.work_email)
+            nom_email.append(user.employee_parent_id.name)
+            nom_email.append(ser.employee_parent_id.work_email)
             return nom_email
 
     def get_directeur(self):
