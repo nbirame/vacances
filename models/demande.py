@@ -464,9 +464,10 @@ class Demande(models.Model):
                     #     raise UserError(_('Only a Time Off Manager can approve/refuse its own requests.'))
 
                     if (state == 'directeur' and val_type == 'both') and holiday.holiday_type == 'employee':
-                        if not is_officer and self.env.user != holiday.employee_id.leave_manager_id:
-                            raise UserError(_('You must be either %s\'s manager or Time off Manager to approve this '
-                                              'leave') % (holiday.employee_id.name))
+                        pass
+                        # if not is_officer and self.env.user != holiday.employee_id.leave_manager_id:
+                        #     raise UserError(_('You must be either %s\'s manager or Time off Manager to approve this '
+                        #                       'leave') % (holiday.employee_id.name))
 
                     if (state == 'validate' and val_type == 'manager') and self.env.user != (
                             holiday.employee_id | holiday.sudo().employee_ids).leave_manager_id:
