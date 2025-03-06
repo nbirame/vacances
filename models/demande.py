@@ -394,41 +394,14 @@ class Demande(models.Model):
         else:
             return user.employee_parent_id.work_email
 
-    # def get_directeur(self):
-    #     current_employee = self.env.user.employee_id.id
-    #     user = self.env['res.users'].sudo().search([('employee_id', '=', current_employee)], limit=1)
-    #     # for user in users:
-    #     if user.has_group('vacances.group_service'):
-    #         return user.employee_parent_id.parent_id.user_id.work_email
-    #     else:
-    #         return user.employee_parent_id.parent_id.user_id.work_email
-
     def get_directeur(self):
-        # Récupération de l'employé courant
-        employee = self.env.user.employee_id
-        if not employee:
-            return False  # Pas d'employé relié à l'utilisateur
-
-        # Vérifier si l'utilisateur est dans un service ou un département
-        if self.env.user.has_group('vacances.group_service'):
-            # L'utilisateur est dans un service
-            # -> On doit remonter 3 fois (service -> département -> direction)
-            # On vérifie que les parents existent à chaque étape pour éviter les erreurs
-            directeur = (
-                    employee.parent_id
-                    and employee.parent_id.parent_id
-                    and employee.parent_id.parent_id.parent_id
-            )
+        current_employee = self.env.user.employee_id.id
+        user = self.env['res.users'].sudo().search([('employee_id', '=', current_employee)], limit=1)
+        # for user in users:
+        if user.has_group('vacances.group_service'):
+            return user.employee_parent_id.parent_id.user_id.employee_parent_id.parent_id.user_id.work_email
         else:
-            # L'utilisateur est dans un département
-            # -> On remonte 2 fois (département -> direction)
-            directeur = (
-                    employee.parent_id
-                    and employee.parent_id.parent_id
-            )
-
-        # On renvoie l'email s'il existe
-        return directeur.user_id.work_email if directeur and directeur.user_id else False
+            return user.employee_parent_id.parent_id.user_id.work_email
 
     @api.depends_context('uid')
     def _compute_description(self):
