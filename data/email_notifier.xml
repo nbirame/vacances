@@ -8,7 +8,6 @@
             <field name="email_to">{{object.user_id.work_email}}</field>
             <field name="subject">Demande de Congé {{object.name or ''}}</field>
             <field name="model_id" ref="hr_holidays.model_hr_leave"/>
-            <!--<field name="report_template" ref="mission.report_mission_delegation_equipe"/>-->
             <field name="auto_delete" eval="True"/>
             <field name="body_html"><![CDATA[
                     <div>Bonjour,<br/>
@@ -44,7 +43,6 @@
             <field name="name">Demande de Congé</field>
             <field name="email_from">fongip@fongip.sn</field>
             <field name="email_to">{{object.get_chefDepartment()[1] or '' }}</field>
-           <!-- <field name="email_to">{{object.user_id.employee_parent_id.work_email or '' }}</field>-->
             <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
             <field name="model_id" ref="hr_holidays.model_hr_leave"/>
             <field name="auto_delete" eval="True"/>
@@ -52,8 +50,8 @@
                     <div>Bonjour,<br/>
                      <span t-out="object.get_chefDepartment()[0] or ''"></span><br/>
                      <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé</p>
-                     <span t-out="object.date_from or ''"></span> au
-                     <span t-out="object.date_to or ''"></span><br/>
+                     <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span> au
+                     <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span><br/>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -65,13 +63,12 @@
             <field name="email_to">{{object.get_directeur() or '' }}</field>
             <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
             <field name="model_id" ref="hr_holidays.model_hr_leave"/>
-            <!--<field name="report_template" ref="mission.report_mission_delegation_equipe"/>-->
             <field name="auto_delete" eval="True"/>
             <field name="body_html"><![CDATA[
                     <div>Bonjour Directeur,<br/>
                      <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
-                     <span t-out="object.date_from or ''"></span> au
-                     <span t-out="object.date_to or ''"></span><br/>
+                     <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span> au
+                     <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span><br/>
                      <!--<span t-out="object.get_url(object.id) or ''"></span>-->
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
@@ -88,8 +85,8 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour DRH,
                          <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
-                         <span t-out="object.date_from or ''"></span> au
-                         <span t-out="object.date_to or ''"></span><br/>
+                         <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span> au
+                         <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span><br/>
                          <!--<span t-out="object.get_url(object.id) or ''"></span>
                          <p>Cliquer sur le lien ci-dessous</p></br>-->
                          <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
@@ -103,13 +100,12 @@
             <field name="email_to">{{ object.get_sg() }}</field>
             <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
             <field name="model_id" ref="hr_holidays.model_hr_leave"/>
-            <!--<field name="report_template" ref="mission.report_mission_delegation_equipe"/>-->
             <field name="auto_delete" eval="True"/>
             <field name="body_html"><![CDATA[
                     <div>Bonjour SG, <br/>
                      <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
-                     <span t-out="object.date_from or ''"></span> au
-                     <span t-out="object.date_to or ''"></span><br/>
+                     <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span> au
+                     <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span><br/>
                     <!-- <span t-out="object.get_url(object.id) or ''"></span>-->
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
@@ -122,14 +118,12 @@
             <field name="email_to">{{ object.get_ag() }}</field>
             <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
             <field name="model_id" ref="hr_holidays.model_hr_leave"/>
-            <!--<field name="report_template" ref="mission.report_mission_delegation_equipe"/>-->
             <field name="auto_delete" eval="True"/>
             <field name="body_html"><![CDATA[
                     <div>Bonjour AG, <br/>
                      <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
-                     <span t-out="object.date_from or ''"></span> au
-                     <span t-out="object.date_to or ''"></span><br/>
-                     <!--<span t-out="object.get_url(object.id) or ''"></span>-->
+                     <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span> au
+                     <span t-out="object.date_to..strftime('%d/%m/%Y') or ''"></span><br/>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -146,7 +140,6 @@
                     <div>Bonjour,<br/>
                      <span t-out="object.user_id.name or ''"></span><br/>
                      <p>Votre demande de congé a été rejeté</p><br/>
-                     <!--<span t-out="object.get_url(object.id) or ''"></span><br/>-->
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
