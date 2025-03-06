@@ -43,7 +43,7 @@
         <record id="email_template_chefDep_conge" model="mail.template">
             <field name="name">Demande de Congé</field>
             <field name="email_from">fongip@fongip.sn</field>
-            <field name="email_to">{{object.get_chefDepartment() or '' }}</field>
+            <field name="email_to">{{object.get_chefDepartment()[1] or '' }}</field>
            <!-- <field name="email_to">{{object.user_id.employee_parent_id.work_email or '' }}</field>-->
             <field name="subject">Demande de Congé par {{object.user_id.name or ''}}</field>
             <field name="model_id" ref="hr_holidays.model_hr_leave"/>
@@ -51,7 +51,7 @@
             <field name="auto_delete" eval="True"/>
             <field name="body_html"><![CDATA[
                     <div>Bonjour,<br/>
-                     <span t-out="object.user_id.employee_parent_id.name or ''"></span><br/>
+                     <span t-out="object.get_chefDepartment()[0] or ''"></span><br/>
                      <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé</p>
                      <span t-out="object.date_from or ''"></span> au
                      <span t-out="object.date_to or ''"></span><br/>
