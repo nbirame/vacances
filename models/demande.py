@@ -396,7 +396,7 @@ class Demande(models.Model):
             return nom_email
         else:
             nom_email.append(user.employee_parent_id.name)
-            nom_email.append(ser.employee_parent_id.work_email)
+            nom_email.append(user.employee_parent_id.work_email)
             return nom_email
 
     def get_directeur(self):
