@@ -26,13 +26,16 @@ class Demande(models.Model):
         ('demi-jour', 'Demi journée')
     ], store=True, tracking=True, copy=False, string="Journée"
     )
-    employee_user_id = fields.Many2one(
-        'res.users',
-        string="Employee's User",
-        related='employee_id.user_id',
-        store=True,  # important : on stocke pour pouvoir l'utiliser en attrs/domain
-        readonly=True
-    )
+    # can_validate = fields.Boolean('Can Validate', compute='_compute_can_validate')
+    # allocated_days = fields.Float(string="Jours alloués")
+    # used_days = fields.Float(
+    #     string='Nombre de jours déjà pris',
+    #     store=False
+    # )
+    # remaining_days = fields.Float(
+    #     string='Nombre de jours restants',
+    #     store=False
+    # )
 
     @api.model_create_multi
     def create(self, vals_list):
