@@ -8,7 +8,7 @@
                 <header>
                     <button name="report_print" string="Les agents en congé" type="object" class="oe_highlight"
                             groups="vacances.group_conge_AG"/>
-                    <button string="Confirm" name="action_confirm" states="confirm" type="object" class="oe_highlight btn btn-success"/>
+                    <button string="Confirmer" name="action_confirm" states="confirm" type="object" class="oe_highlight btn btn-success"/>
                     <button string="Remettre en Brouillon" name="action_draft" states="confirm" type="object"
                             class="oe_highlight btn btn-warning"/>
                     <button string="VALIDER" name="action_chefDep" states="chefDep" type="object" class="oe_highlight btn btn-success"
