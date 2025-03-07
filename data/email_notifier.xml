@@ -100,10 +100,10 @@
                          <p> L'agent <span t-out="object.user_id.name or ''"></span><br/>a fait une demande de congé du</p>
                          <span t-if="object.date_from">
                             <span t-out="object.date_from.strftime('%d/%m/%Y') or ''"></span>
-                         </span> au
-                         <span t-if="object.date_from">
+                         </span><span t-else=""></span> au
+                         <span t-if="object.date_to">
                             <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span>
-                         </span>
+                         </span><span t-else=""></span>
                             <br/>
                          <p>Cliquer sur le lien ci-dessous</p></br>-->
                          <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>

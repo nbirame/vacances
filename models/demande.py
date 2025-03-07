@@ -63,24 +63,24 @@ class Demande(models.Model):
                 # Handle double validation
                 if mapped_validation_type[leave_type_id] == 'both':
                     self._check_double_validation_rules(employee_id, values.get('state', False))
-                user = self.env['res.users'].sudo().search([('employee_id', '=', employee_id)], limit=1)
+                # user = self.env['res.users'].sudo().search([('employee_id', '=', employee_id)], limit=1)
                 # for user in users:
-                if user.has_group('vacances.group_conge_directeur'):
-                    values.update({'state': 'drh'})
-                    self.action_send_email_notifier("email_template_drh_conge")
-                elif user.has_group('vacances.group_conge_chef_service'):
-                    values.update({'state': 'directeur'})
-                    self.action_send_email_notifier("email_template_chefDep_conge")
-                elif user.has_group('vacances.group_conge_drh'):
-                    values.update({'state': 'sg'})
-                    self.action_send_email_notifier("email_template_SG_conge")
-                elif user.has_group('vacances.group_conge_sg'):
-                    values.update({'state': 'ag'})
-                    self.action_send_email_notifier("email_template_AG_conge")
-                elif user.has_group('vacances.group_conge_AG'):
-                    values.update({'state': 'validate'})
-                else:
-                    values.update({'state': 'confirm'})
+                # if user.has_group('vacances.group_conge_directeur'):
+                #     values.update({'state': 'drh'})
+                #     self.action_send_email_notifier("email_template_drh_conge")
+                # elif user.has_group('vacances.group_conge_chef_service'):
+                #     values.update({'state': 'directeur'})
+                #     self.action_send_email_notifier("email_template_chefDep_conge")
+                # elif user.has_group('vacances.group_conge_drh'):
+                #     values.update({'state': 'sg'})
+                #     self.action_send_email_notifier("email_template_SG_conge")
+                # elif user.has_group('vacances.group_conge_sg'):
+                #     values.update({'state': 'ag'})
+                #     self.action_send_email_notifier("email_template_AG_conge")
+                # elif user.has_group('vacances.group_conge_AG'):
+                #     values.update({'state': 'validate'})
+                # else:
+                #     values.update({'state': 'confirm'})
 
         holidays = super(Demande, self.with_context(mail_create_nosubscribe=True)).create(vals_list)
 
