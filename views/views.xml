@@ -11,19 +11,6 @@
                     <button string="Confirmer" name="action_confirm" states="confirm" type="object" class="oe_highlight btn btn-success"/>
                     <button string="Remettre en Brouillon" name="action_draft" states="confirm" type="object"
                             class="oe_highlight btn btn-warning"/>
-                    <button name="action_draft"
-                            string="Remettre en Brouillon"
-                            type="object"
-                            states="drh"
-                            class="oe_highlight"
-                            attrs="{
-                                'invisible': [
-                                    '|',
-                                    ('state', '!=', 'drh'),
-                                    ('employee_user_id', '!=', uid)
-                                ]
-                            }"
-                    />
                     <button string="VALIDER" name="action_chefDep" states="chefDep" type="object" class="oe_highlight btn btn-success"
                             groups="vacances.group_conge_chef_service"/>
                     <button name="action_directeur" string="VALIDER" states="directeur" type="object" class="oe_highlight btn btn-success"
