@@ -19,7 +19,7 @@
                             attrs="{
                                 'invisible': [
                                     '|',
-                                    ('state', '==', 'drh'),
+                                    ('state', '!=', 'drh'),
                                     ('employee_id.user_id', '!=', uid)
                                 ]
                             }"
