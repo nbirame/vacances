@@ -36,6 +36,18 @@ class Demande(models.Model):
     #     string='Nombre de jours restants',
     #     store=False
     # )
+    is_current_user = fields.Boolean(
+        string="Is Current User?",
+        compute='_compute_is_current_user',
+        store=True
+    )
+
+    @api.depends('employee_id')
+    def _compute_is_current_user(self):
+        for leave in self:
+            # Compare l'ID de l'utilisateur courant (self.env.uid)
+            # avec l'ID de l'utilisateur lié à l'employé (employee_id.user_id.id)
+            leave.is_current_user = (leave.employee_id.user_id.id == self.env.uid)
 
     @api.model_create_multi
     def create(self, vals_list):

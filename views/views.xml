@@ -20,7 +20,7 @@
                                 'invisible': [
                                     '|',
                                     ('state', '!=', 'drh'),
-                                    ('employee_id.user_id', '!=', uid)
+                                    ('is_current_user', '!=', uid)
                                 ]
                             }"
                             groups="vacances.group_conge_directeur"
