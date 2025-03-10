@@ -20,7 +20,7 @@ class Recapitulation(models.Model):
         compute='_compute_leave_info',
         store=False
     )
-    user_id = fields.Many2one('res.users', string='Utilisateur')
+    # user_id = fields.Many2one('res.users', string='Utilisateur')
 
     @api.depends()
     def _compute_leave_info(self):

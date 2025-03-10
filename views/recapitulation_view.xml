@@ -50,7 +50,7 @@
             id="menu_recapitulation_cong"
             action="vacances_recapitulation_action"
             name="Dashbord Congé"
-            parent="vacances.menu_vacances_root"
+            parent="hr_holidays.menu_hr_holidays_configuration"
             sequence="5"/>
 
 </odoo>
