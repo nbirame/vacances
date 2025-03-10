@@ -2,7 +2,7 @@ from odoo import models, fields, api
 
 
 class Recapitulation(models.Model):
-    _name="vacance.recapitulation"
+    _name="vacances.recapitulation"
     _description="Tableau de bord des congé"
 
     allocated_days = fields.Float(
