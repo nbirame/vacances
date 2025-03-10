@@ -5,7 +5,7 @@
         <field name="name">Tableau de bord des congé</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">vacances.recapitulation</field>
-        <field name="domain">[('user_id','=',uid)]</field>
+        <!--<field name="domain">[('user_id','=',uid)]</field>-->
         <field name="view_mode">tree,form,activity</field>
     </record>
     <record id="vacances_recapitulation_tree" model="ir.ui.view">
