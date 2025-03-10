@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-    <record id="vacances_recaputilation_action" model="ir.actions.act_window">
+    <record id="vacances_recapitulation_action" model="ir.actions.act_window">
         <field name="name">Tableau de bord des congé</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">vacances.recaputilation</field>
+        <field name="res_model">vacances.recapitulation</field>
         <field name="domain">[('user_id','=',uid)]</field>
         <field name="view_mode">tree,form,activity</field>
     </record>
-    <record id="vacances_recaputilation_tree" model="ir.ui.view">
-        <field name="name">vacances.recaputilation.tree</field>
-        <field name="model">vacances.recaputilation</field>
+    <record id="vacances_recapitulation_tree" model="ir.ui.view">
+        <field name="name">vacances.recapitulation.tree</field>
+        <field name="model">vacances.recapitulation</field>
         <field name="arch" type="xml">
             <tree string="Nombre de jour de congé">
                 <field name="allocated_days"/>
@@ -19,8 +19,8 @@
             </tree>
         </field>
     </record>
-    <record id="vacances_recaputilation_search" model="ir.ui.view">
-        <field name="model">vacances.recaputilation</field>
+    <record id="vacances_recapitulation_search" model="ir.ui.view">
+        <field name="model">vacances.recapitulation</field>
         <field name="arch" type="xml">
             <search>
                 <field name="allocated_days"/>
@@ -29,9 +29,9 @@
             </search>
         </field>
     </record>
-    <record id="vacances_recaputilation_form" model="ir.ui.view">
-        <field name="name">vacances.recaputilation.form</field>
-        <field name="model">vacances.recaputilation</field>
+    <record id="vacances_recapitulation_form" model="ir.ui.view">
+        <field name="name">vacances.recapitulation.form</field>
+        <field name="model">vacances.recapitulation</field>
         <field name="arch" type="xml">
             <form string="Détail congé">
                 <sheet>
@@ -48,8 +48,8 @@
     </record>
 
     <menuitem
-            id="menu_recaputilation_cong"
-            action="vacances_recaputilation_action"
+            id="menu_recapitulation_cong"
+            action="vacances_recapitulation_action"
             name="Dashbord Congé"
             parent="hr_holidays.menu_hr_holidays_configuration"
             sequence="5"/>
