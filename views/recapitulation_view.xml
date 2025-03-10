@@ -5,7 +5,7 @@
         <field name="name">Tableau de bord des congé</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">vacances.recapitulation</field>
-        <field name="view_mode">tree,form,activity</field>
+        <field name="view_mode">tree,form</field>
     </record>
     <record id="vacances_recapitulation_tree" model="ir.ui.view">
         <field name="name">vacances.recapitulation.tree</field>
@@ -50,7 +50,7 @@
             id="menu_recapitulation_cong"
             action="vacances_recapitulation_action"
             name="Dashbord Congé"
-            parent="hr_holidays.menu_hr_holidays_configuration"
+            parent="vacances.menu_vacances_root"
             sequence="5"/>
 
 </odoo>
