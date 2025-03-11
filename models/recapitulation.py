@@ -18,7 +18,8 @@ class Recapitulation(models.Model):
         compute='_compute_leave_info',
         store=True
     )
-
+    user_id = fields.Many2one('res.users', string='Utilisateur', help="Facultatif : filtrer par utilisateur")
+    
     @api.onchange('allocated_days', 'used_days', 'remaining_days')
     def onchange_used_days(self):
         for employee in self:
