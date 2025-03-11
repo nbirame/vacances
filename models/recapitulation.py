@@ -14,7 +14,7 @@ class Recapitulation(models.Model):
     value = fields.Float(
         string='Valeur',
         compute='_compute_value',
-        store=False,  # ou True si vous voulez l'enregistrer en base
+        store=True,  # ou True si vous voulez l'enregistrer en base
     )
 
     user_id = fields.Many2one('res.users', string='Utilisateur', help="Facultatif : filtrer par utilisateur")
