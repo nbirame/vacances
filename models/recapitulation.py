@@ -1,52 +1,59 @@
 from odoo import models, fields, api
 
-
 class Recapitulation(models.Model):
-    _name="vacances.recapitulation"
-    _description="Tableau de bord des congé"
+    _name = "vacances.recapitulation"
+    _description = "Tableau de bord des congés (camembert dynamique)"
 
-    name = fields.Char(string='Label')
-    value = fields.Float(string='Valeur')
-    user_id = fields.Many2one('res.users', string='Utilisateur')
+    name = fields.Selection([
+        ('total_allocation', 'Total Alloué'),
+        ('pris', 'Pris'),
+        ('restant', 'Restant'),
+    ], string='Label', required=True)
 
-    @api.model
-    def _compute_leave_data(self):
+    # Champ calculé
+    value = fields.Float(
+        string='Valeur',
+        compute='_compute_value',
+        store=False,  # ou True si vous voulez l'enregistrer en base
+    )
+
+    user_id = fields.Many2one('res.users', string='Utilisateur', help="Facultatif : filtrer par utilisateur")
+
+    @api.depends('name', 'user_id')
+    def _compute_value(self):
         """
-        Calcule le total de congés alloués, déjà pris et restant.
-        S'appuie sur hr.leave.allocation et hr.leave (validé).
+        Recalcule la valeur 'value' en fonction :
+        - de la sélection 'name' (pour savoir si c'est 'total_allocation', 'pris', ou 'restant')
+        - éventuellement de user_id si vous souhaitez filtrer par utilisateur
         """
-        # 1) Récupérer toutes les allocations (total alloué)
-        allocations = self.env['hr.leave.allocation'].search([])
-        total_allocation = sum(a.number_of_days for a in allocations)
+        for rec in self:
+            # 1) Filtrer éventuellement par user_id (trouver l'employé lié à l'utilisateur)
+            #    ou bien prendre tout si user_id est vide.
+            if rec.user_id:
+                employees = self.env['hr.employee'].search([('user_id', '=', rec.user_id.id)])
+                allocations = self.env['hr.leave.allocation'].search([
+                    ('employee_id', 'in', employees.ids),
+                ])
+                leaves_taken = self.env['hr.leave'].search([
+                    ('employee_id', 'in', employees.ids),
+                    ('state', '=', 'validate')  # ou 'approved' selon config
+                ])
+            else:
+                # Pas de filtre par user => toutes les allocations, tous les congés validés
+                allocations = self.env['hr.leave.allocation'].search([])
+                leaves_taken = self.env['hr.leave'].search([('state', '=', 'validate')])
 
-        # 2) Récupérer tous les congés validés (jours pris)
-        leaves_taken = self.env['hr.leave'].search([('state', '=', 'validate')])
-        total_taken = sum(l.number_of_days for l in leaves_taken)
+            # 2) Calculer total alloué, total pris et restant
+            total_allocation = sum(a.number_of_days for a in allocations)
+            total_taken = sum(l.number_of_days for l in leaves_taken)
+            remaining = total_allocation - total_taken
 
-        # 3) Calculer le restant
-        remaining = total_allocation - total_taken
-
-        return {
-            'total_allocation': total_allocation,
-            'total_taken': total_taken,
-            'remaining': remaining,
-        }
-
-    @api.model
-    def action_update_leave_report(self):
-        """
-        Supprime les anciennes données du rapport, recalcule
-        et crée 3 lignes correspondant aux 3 segments du camembert.
-        """
-        # Supprimer les éventuels enregistrements précédents
-        self.search([]).unlink()
-
-        data = self._compute_leave_data()
-        lines = [
-            {'name': 'Total Alloué', 'value': data['total_allocation']},
-            {'name': 'Pris', 'value': data['total_taken']},
-            {'name': 'Restant', 'value': data['remaining']},
-        ]
-
-        for line in lines:
-            self.create(line)
+            # 3) Affecter la valeur selon l’option 'name'
+            if rec.name == 'total_allocation':
+                rec.value = total_allocation
+            elif rec.name == 'pris':
+                rec.value = total_taken
+            elif rec.name == 'restant':
+                rec.value = remaining
+            else:
+                rec.value = 0.0
