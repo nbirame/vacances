@@ -47,21 +47,12 @@ class EmployeeInherit(models.Model):
 
     @api.depends()
     def _compute_leave_info(self):
-        """
-        Pour chaque employé, on calcule le total alloué, le total pris et le restant.
-        """
         for employee in self:
-            # 1) Calculer le total alloué (dans hr.leave.allocation)
-            #    pour l'employé, dans un état validé,
-            #    éventuellement sur la période en cours.
             allocations = self.env['hr.leave.allocation'].search([
                 ('employee_id', '=', employee.id),
                 ('state', '=', 'validate'),  # ou 'validate', selon Odoo
             ])
             total_allocated = sum(alloc.number_of_days for alloc in allocations)
-
-            # 2) Calculer le total consommé (dans hr.leave) pour l'employé
-            #    sur les congés validés.
             leaves_taken = self.env['hr.leave'].search([
                 ('employee_id', '=', employee.id),
                 ('state', 'in', ['drh','sg','ag','directeur','validate']),  # 'validate' = congés validés
