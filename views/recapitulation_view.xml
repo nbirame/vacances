@@ -8,8 +8,8 @@
         <field name="arch" type="xml">
             <graph string="Camembert Congés" type="pie">
                 <!-- On utilise 'value' comme mesure, 'name' comme étiquette -->
-                <field name="value" type="measure"/>
-                <field name="name" type="row"/>
+                <field name="used_days" type="measure"/>
+                <field name="remaining_days" type="row"/>
             </graph>
         </field>
     </record>
@@ -28,58 +28,3 @@
               parent="hr_holidays.menu_hr_holidays_configuration"
               action="action_hr_leave_report_graph"/>
 </odoo>
-<!--
-<odoo>
-    <record id="vacances_recapitulation_action" model="ir.actions.act_window">
-        <field name="name">Tableau de bord des congé</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">vacances.recapitulation</field>
-        <field name="view_mode">tree,form</field>
-    </record>
-    <record id="vacances_recapitulation_tree" model="ir.ui.view">
-        <field name="name">vacances.recapitulation.tree</field>
-        <field name="model">vacances.recapitulation</field>
-        <field name="arch" type="xml">
-            <tree string="Nombre de jour de congé">
-                <field name="allocated_days"/>
-                <field name="used_days"/>
-                <field name="remaining_days"/>
-            </tree>
-        </field>
-    </record>
-    <record id="vacances_recapitulation_search" model="ir.ui.view">
-        <field name="model">vacances.recapitulation</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="allocated_days"/>
-                <field name="used_days"/>
-                <field name="remaining_days"/>
-            </search>
-        </field>
-    </record>
-    <record id="vacances_recapitulation_form" model="ir.ui.view">
-        <field name="name">vacances.recapitulation.form</field>
-        <field name="model">vacances.recapitulation</field>
-        <field name="arch" type="xml">
-            <form string="Détail congé">
-                <sheet>
-                    <div class="oe_title">
-                        <group name="group_top" col="4">
-                            <field name="allocated_days"/>
-                            <field name="used_days"/>
-                            <field name="remaining_days"/>
-                        </group>
-                    </div>
-                </sheet>
-            </form>
-        </field>
-    </record>
-
-    <menuitem
-            id="menu_recapitulation_cong"
-            action="vacances_recapitulation_action"
-            name="Dashbord Congé"
-            parent="hr_holidays.menu_hr_holidays_configuration"
-            sequence="5"/>
-
-</odoo>-->
