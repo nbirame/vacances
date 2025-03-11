@@ -56,4 +56,4 @@ class Recapitulation(models.Model):
             elif rec.name == 'restant':
                 rec.value = remaining
             else:
-                rec.value = 0.0
+                rec.value = 30.0
