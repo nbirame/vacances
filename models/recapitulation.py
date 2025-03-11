@@ -7,6 +7,7 @@ class Recapitulation(models.Model):
 
     name = fields.Char(string='Label')
     value = fields.Float(string='Valeur')
+    user_id = fields.Many2one('res.users', string='Utilisateur')
 
     @api.model
     def _compute_leave_data(self):
