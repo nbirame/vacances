@@ -37,13 +37,6 @@ class EmployeeInherit(models.Model):
         'leave_ids'
     )
     def _compute_leave_info(self):
-        """
-        Calcule en temps réel (et stocke en base) :
-        - allocated_days = total des allocations validées
-        - used_days = total des congés validés
-        - remaining_days = différence
-        Pour chaque employé.
-        """
         for employee in self:
             # Filtrer allocations validées
             allocations_valides = employee.allocation_ids.filtered(
