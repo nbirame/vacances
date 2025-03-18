@@ -34,10 +34,6 @@
         'views/actions.xml',
         'views/party_view.xml',
         'views/views.xml',
-        #'views/dashbord_view.xml',
-        #'views/dashbord_conge_view.xml',
-        #'views/agent_view.xml',
-        # 'views/leave_template.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
