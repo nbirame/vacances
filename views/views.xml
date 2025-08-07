@@ -11,20 +11,6 @@
                     <button string="Confirmer" name="action_confirm" states="confirm" type="object" class="oe_highlight btn btn-success"/>
                     <button string="Remettre en Brouillon" name="action_draft" states="confirm" type="object"
                             class="oe_highlight btn btn-warning"/>
-                    <button string="Remettre en Brouillon" name="action_draft" states="chefDep" type="object"
-                            class="oe_highlight btn btn-warning"/>
-                    <button string="Remettre en Brouillon" name="action_draft" states="directeur" type="object"
-                            class="oe_highlight btn btn-warning"/>
-                     <button string="Remettre en Brouillon" name="action_draft" states="drh" type="object"
-                            class="oe_highlight btn btn-warning"/>
-                    <button string="Remettre en Brouillon" name="action_draft" states="sg" type="object"
-                            class="oe_highlight btn btn-warning"/>
-                    <button string="Remettre en Brouillon" name="action_draft" states="ag" type="object"
-                            class="oe_highlight btn btn-warning"/>
-                    <button string="Remettre en Brouillon" name="action_draft" states="validate" type="object"
-                            class="oe_highlight btn btn-warning"/>
-                    <button string="Remettre en Brouillon" name="action_draft" states="refuse" type="object"
-                            class="oe_highlight btn btn-warning"/>
                     <button string="VALIDER" name="action_chefDep" states="chefDep" type="object" class="oe_highlight btn btn-success"
                             groups="vacances.group_conge_chef_service"/>
                     <button name="action_directeur" string="VALIDER" states="directeur" type="object" class="oe_highlight btn btn-success"
