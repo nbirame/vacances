@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_vacances_ferier,vacances.ferier,model_vacances_ferier,base.group_user,1,1,1,1
-access_vacances_party,vacances.party,model_vacances_party,base.group_user,1,1,1,1
+access_vacances_ferier,vacances.ferier,model_vacances_ferier,,1,1,1,0
+access_vacances_party,vacances.party,model_vacances_party,base.group_user,1,1,1,0
+access_vacances_ferier_drh,vacances.ferier,model_vacances_ferier,vacances.group_conge_drh,1,1,1,1
+access_vacances_party_drh,vacances.party,model_vacances_party,vacances.group_conge_drh,1,1,1,1

@@ -20,20 +20,22 @@
     'version': '15.0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail', 'base_import', 'hr', 'hr_holidays', 'website'],
+    'depends': ['base', 'mail', 'base_import', 'hr', 'hr_holidays', 'website', 'calendar', 'resource'],
 
     # always loaded
     'data': [
         'security/conge_security.xml',
         'security/ir.model.access.csv',
-        'views/ferier_view.xml',
+        # 'views/ferier_view.xml',
         'data/email_notifier.xml',
         'report/report_agent_on_leave.xml',
         'report/report_template_agent_on_leave.xml',
         'views/agent_on_leave.xml',
         'views/actions.xml',
         'views/party_view.xml',
+        # 'views/ferier_view.xml',
         'views/views.xml',
+        'views/resource_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

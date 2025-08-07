@@ -3,6 +3,7 @@ from datetime import timedelta, datetime
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError, ValidationError
 from werkzeug.urls import url_encode
+from datetime import date
 
 
 class Demande(models.Model):
@@ -26,16 +27,7 @@ class Demande(models.Model):
         ('demi-jour', 'Demi journée')
     ], store=True, tracking=True, copy=False, string="Journée"
     )
-    # can_validate = fields.Boolean('Can Validate', compute='_compute_can_validate')
-    # allocated_days = fields.Float(string="Jours alloués")
-    # used_days = fields.Float(
-    #     string='Nombre de jours déjà pris',
-    #     store=False
-    # )
-    # remaining_days = fields.Float(
-    #     string='Nombre de jours restants',
-    #     store=False
-    # )
+    nombre_jour_restant = fields.Float(string="Nombre de jour restant", compute="_compute_nombre_jour_restant", store=True)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -63,24 +55,6 @@ class Demande(models.Model):
                 # Handle double validation
                 if mapped_validation_type[leave_type_id] == 'both':
                     self._check_double_validation_rules(employee_id, values.get('state', False))
-                # user = self.env['res.users'].sudo().search([('employee_id', '=', employee_id)], limit=1)
-                # for user in users:
-                # if user.has_group('vacances.group_conge_directeur'):
-                #     values.update({'state': 'drh'})
-                #     self.action_send_email_notifier("email_template_drh_conge")
-                # elif user.has_group('vacances.group_conge_chef_service'):
-                #     values.update({'state': 'directeur'})
-                #     self.action_send_email_notifier("email_template_chefDep_conge")
-                # elif user.has_group('vacances.group_conge_drh'):
-                #     values.update({'state': 'sg'})
-                #     self.action_send_email_notifier("email_template_SG_conge")
-                # elif user.has_group('vacances.group_conge_sg'):
-                #     values.update({'state': 'ag'})
-                #     self.action_send_email_notifier("email_template_AG_conge")
-                # elif user.has_group('vacances.group_conge_AG'):
-                #     values.update({'state': 'validate'})
-                # else:
-                #     values.update({'state': 'confirm'})
 
         holidays = super(Demande, self.with_context(mail_create_nosubscribe=True)).create(vals_list)
 
@@ -138,36 +112,34 @@ class Demande(models.Model):
     def action_drh(self):
         self.write({'state': 'sg'})
         self.action_send_email_notifier("email_template_SG_conge")
-        # self.action_send_email_notifier("email_template_drh_conge")
+        self.action_send_email_notifier("email_template_validation_DRH_conge")
 
     def action_sg(self):
         self.write({'state': 'ag'})
         self.action_send_email_notifier("email_template_AG_conge")
-        # self.action_send_email_notifier("email_template_SG_conge")
+        self.action_send_email_notifier("email_template_validation_SG_conge")
 
     def action_ag(self):
         self.write({'state': 'validate'})
         self.action_send_email_notifier("email_template_AG_conge")
+        self.action_send_email_notifier("email_template_validation_DP_conge")
 
     def action_annuler(self):
         self.write({'state': 'refuse'})
         self.action_send_email_notifier("email_template_rejeter_conge")
 
-    # def action_chef(self):
-    #     self.write({'state': 'chef'})
-    #     self.action_send_email_notifier("email_template_chefService_conge")
-
     def action_chefDep(self):
         self.write({'state': 'directeur'})
         self.action_send_email_notifier("email_template_directeur_conge") # email_template_drh_conge
-        # self.action_send_email_notifier("email_template_chefDep_conge")
+        self.action_send_email_notifier("email_template_validation_chefDep_conge")
 
     def action_draft(self):
         self.write({'state': 'draft'})
 
     def action_directeur(self):
-        self.action_send_email_notifier("email_template_drh_conge")
         self.write({'state': 'drh'})
+        self.action_send_email_notifier("email_template_drh_conge")
+        self.action_send_email_notifier("email_template_validation_DP_conge")
 
     def action_validate(self):
         current_employee = self.env.user.employee_id
@@ -183,7 +155,7 @@ class Demande(models.Model):
             raise UserError(_('Time off request must be confirmed in order to approve it.'))
 
         self.write({'state': 'validate'})
-        # self.action_send_email_notifier("email_template_reponse_conge")
+        self.action_send_email_notifier("email_template_validation_AG_conge")
         leaves_second_approver = self.env['hr.leave']
         leaves_first_approver = self.env['hr.leave']
 
@@ -286,52 +258,24 @@ class Demande(models.Model):
                 if leave_can.state == "drh":
                     self.can_validate =True
 
-    @api.depends('date_from', 'date_to', 'employee_id', 'type_jour')
+    @api.depends('date_from', 'date_to', 'employee_id', 'type_jour', 'nombre_jour_restant')
     def _compute_number_of_days(self):
         for holiday in self:
             if holiday.date_from and holiday.date_to:
-                fete = self.env["vacances.ferier"].sudo().search([])
-                if fete:
-                    for jour_fete in fete:
-                        if holiday.date_from <= jour_fete.date_debut <= jour_fete.date_fin <= holiday.date_to:
-                            number_day_party_one = holiday._get_number_of_days(holiday.date_from, jour_fete.date_debut,
-                                                                               holiday.employee_id.id)['days']
-                            number_day_party_two = holiday._get_number_of_days(jour_fete.date_fin, holiday.date_to,
-                                                                               holiday.employee_id.id)['days']
-                            if holiday.type_jour == 'demi-jour':
-                                holiday.number_of_days = (number_day_party_one + number_day_party_two) / 2
-                            else:
-                                holiday.number_of_days = number_day_party_one + number_day_party_two
-                            # print(holiday.number_of_days)
-                        else:
-                            if holiday.type_jour == 'demi-jour':
-                                nombre = \
-                                holiday._get_number_of_days(holiday.date_from, holiday.date_to, holiday.employee_id.id)[
-                                    'days']
-                                holiday.number_of_days = nombre / 2
-                            else:
-                                holiday.number_of_days = \
-                                    holiday._get_number_of_days(holiday.date_from, holiday.date_to,
-                                                                holiday.employee_id.id)[
-                                        'days']
-                else:
-                    if holiday.type_jour == 'demi-jour':
-                        number_day = \
-                        holiday._get_number_of_days(holiday.date_from, holiday.date_to, holiday.employee_id.id)['days']
-                        holiday.number_of_days = number_day / 2
-                    else:
-                        holiday.number_of_days = \
-                            holiday._get_number_of_days(holiday.date_from, holiday.date_to, holiday.employee_id.id)[
-                                'days']
-            else:
                 if holiday.type_jour == 'demi-jour':
-                    holiday.number_of_days = holiday.number_of_days = \
-                        (holiday._get_number_of_days(holiday.date_from, holiday.date_to, holiday.employee_id.id)[
-                            'days']) / 2
+                    number_day = \
+                    holiday._get_number_of_days(holiday.date_from, holiday.date_to, holiday.employee_id.id)['days']
+                    holiday.number_of_days = number_day / 2
                 else:
-                    holiday.number_of_days = holiday.number_of_days = \
+                    holiday.number_of_days = \
                         holiday._get_number_of_days(holiday.date_from, holiday.date_to, holiday.employee_id.id)[
                             'days']
+            if self.date_from and self.number_of_days >= 5 and self.holiday_status_id.name=="Congé légaux":
+                number_day_befor_date = self.date_from.date() - date.today()
+                if number_day_befor_date <= timedelta(days=5):
+                    raise UserError(_('Vous devez choisir votre congé 5 jours avant'))
+            if holiday.number_of_days > holiday.nombre_jour_restant:
+                raise UserError(_('Vous n\'avez pas le nombre de jour demandé pour ce type de congé'))
 
     def action_send_email_notifier(self, temp):
         send_notification = "Vous avec une nouvelle demande de congé"
@@ -483,3 +427,12 @@ class Demande(models.Model):
                             state == 'validate' and val_type == 'hr') and holiday.holiday_type == 'employee':
                         raise UserError(_('You must either be a Time off Officer or Time off Manager to approve this '
                                           'leave'))
+
+    @api.depends('date_from', 'date_to')
+    def _compute_nombre_jour_restant(self):
+        for record in self:
+            if record.date_from and record.date_to:
+                mapped_days = record.holiday_status_id.get_employees_days((record.employee_id | record.sudo().employee_ids).ids)
+                if mapped_days:
+                    leave_days = mapped_days[record.employee_id.id][record.holiday_status_id.id]
+                    record.nombre_jour_restant  = leave_days['remaining_leaves']
