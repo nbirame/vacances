@@ -9,8 +9,23 @@
                     <button name="report_print" string="Les agents en congé" type="object" class="oe_highlight"
                             groups="vacances.group_conge_AG"/>
                     <button string="Confirmer" name="action_confirm" states="confirm" type="object" class="oe_highlight btn btn-success"/>
+                    <button string="Confirmer" name="action_confirm" states="draft" type="object" class="oe_highlight btn btn-success"/>
                     <button string="Remettre en Brouillon" name="action_draft" states="confirm" type="object"
                             class="oe_highlight btn btn-warning"/>
+                    <button string="Remettre en Brouillon"
+                        name="action_draft"
+                        type="object"
+                        class="oe_highlight btn btn-warning"
+                        attrs="{'invisible': [('can_remettre_brouillon', '=', False)]}"/>
+
+                    <!--<button string="Remettre en Brouillon" name="action_draft" states="chefDep" type="object"
+                            class="oe_highlight btn btn-warning" groups="vacances.group_conge_visiteur" attrs="{'invisible': [('can_remettre_brouillon', '=', False)]}"/>
+                    <button string="Remettre en Brouillon" name="action_draft" states="directeur" type="object"
+                            class="oe_highlight btn btn-warning" attrs="{'invisible': [('can_remettre_brouillon', '=', False)]}"/>
+                    <button string="Remettre en Brouillon" name="action_draft" states="drh" type="object"
+                            class="oe_highlight btn btn-warning" groups="vacances.group_conge_directeur" attrs="{'invisible': [('can_remettre_brouillon', '=', False)]}"/>
+                    <button string="Remettre en Brouillon" name="action_draft" states="sg" type="object"
+                            class="oe_highlight btn btn-warning" groups="vacances.group_conge_drh" attrs="{'invisible': [('can_remettre_brouillon', '=', False)]}"/>-->
                     <button string="VALIDER" name="action_chefDep" states="chefDep" type="object" class="oe_highlight btn btn-success"
                             groups="vacances.group_conge_chef_service"/>
                     <button name="action_directeur" string="VALIDER" states="directeur" type="object" class="oe_highlight btn btn-success"
@@ -186,9 +201,11 @@
                             <field name="user_id" invisible="1"/>
                             <field name="leave_type_support_document" invisible="1"/>
                             <label for="supported_attachment_ids" string="Supporting Document"
-                                   attrs="{'invisible': ['|', ('leave_type_support_document', '=', False), ('state', 'not in', ('draft', 'confirm', 'validate1'))]}"/>
+                                   groups="vacances.group_conge_drh,vacances.group_conge_visiteur"
+                                   attrs="{'invisible': ['|', ('leave_type_support_document', '=', False), ('state', 'not in', ('draft', 'validate', 'drh', 'sg', 'ag'))]}"/>
                             <field name="supported_attachment_ids" widget="many2many_binary" nolabel="1"
-                                   attrs="{'invisible': ['|', ('leave_type_support_document', '=', False), ('state', 'not in', ('draft', 'confirm', 'validate1'))]}"/>
+                                   groups="vacances.group_conge_drh,vacances.group_conge_visiteur"
+                                   attrs="{'invisible': ['|', ('leave_type_support_document', '=', False), ('state', 'not in', ('draft', 'validate', 'drh', 'sg', 'ag'))]}"/>
                         </group>
                         <group name="col_right">
                             <field name="department_id" groups="hr_holidays.group_hr_holidays_user" invisible="1"/>
@@ -198,6 +215,9 @@
                                 <span style="color:green; font-weight: 900;">Nombre de jour restant : </span><field name="nombre_jour_restant"/>
                             </xpath>
                         </group>
+                        <xpath expr="//field[@name='holiday_type']" position="after">
+                                <field name="can_remettre_brouillon"/>
+                            </xpath>
                     </group>
                 </sheet>
             </xpath>

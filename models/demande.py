@@ -28,6 +28,10 @@ class Demande(models.Model):
     ], store=True, tracking=True, copy=False, string="Journée"
     )
     nombre_jour_restant = fields.Float(string="Nombre de jour restant", compute="_compute_nombre_jour_restant", store=True)
+    can_remettre_brouillon = fields.Boolean(
+        compute='_compute_can_remettre_brouillon',
+        store=True
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -44,9 +48,38 @@ class Demande(models.Model):
                 if not values.get('department_id'):
                     values.update({'department_id': self.env['hr.employee'].browse(employee_id).department_id.id})
 
+                # values['state'] = 'chefDep'
+                users = self.env['res.users'].sudo().search([('employee_id', '=', employee_id)], limit=1)
+                for user in users:
+                    if user.has_group('vacances.group_conge_directeur'):
+                        # values.update({'state': 'drh'})
+                        values['state'] = 'drh'
+                        self.action_send_email_notifier("email_template_drh_conge")
+                    elif user.has_group('vacances.group_conge_chef_service'):
+                        # values.update({'state': 'directeur'})
+                        values['state'] = 'directeur'
+                        # self.action_send_email_notifier("email_template_chefDep_conge")
+                        self.action_send_email_notifier("email_template_directeur_conge")
+                    elif user.has_group('vacances.group_conge_drh'):
+                        values['state'] = 'sg'
+                        # values.update({'state': 'sg'})
+                        self.action_send_email_notifier("email_template_SG_conge")
+                    elif user.has_group('vacances.group_conge_sg'):
+                        values['state'] = 'ag'
+                        # values.update({'state': 'ag'})
+                        self.action_send_email_notifier("email_template_AG_conge")
+                    elif user.has_group('vacances.group_conge_AG'):
+                        values.update({'state': 'validate'})
+                    else:
+                        # self.sudo().write({'state': 'chefDep'})
+                        values['state'] = 'chefDep'
+                        self.action_send_email_notifier("email_template_chefDep_conge")
                 # Handle no_validation
                 if mapped_validation_type[leave_type_id] == 'no_validation':
-                    values.update({'state': 'confirm'})
+                    self.sudo().write({'state': 'chefDep'})
+                    self.action_send_email_notifier("email_template_chefDep_conge")
+                    # values.update({'state': 'confirm'})
+                    # self.action_confirm()
 
                 if 'state' not in values:
                     # To mimic the behavior of compute_state that was always triggered, as the field was readonly
@@ -111,6 +144,7 @@ class Demande(models.Model):
 
     def action_drh(self):
         self.write({'state': 'sg'})
+        self.write({'can_remettre_brouillon': False})
         self.action_send_email_notifier("email_template_SG_conge")
         self.action_send_email_notifier("email_template_validation_DRH_conge")
 
@@ -130,6 +164,7 @@ class Demande(models.Model):
 
     def action_chefDep(self):
         self.write({'state': 'directeur'})
+        self.write({'can_remettre_brouillon': False})
         self.action_send_email_notifier("email_template_directeur_conge") # email_template_drh_conge
         self.action_send_email_notifier("email_template_validation_chefDep_conge")
 
@@ -138,6 +173,7 @@ class Demande(models.Model):
 
     def action_directeur(self):
         self.write({'state': 'drh'})
+        self.write({'can_remettre_brouillon': False})
         self.action_send_email_notifier("email_template_drh_conge")
         self.action_send_email_notifier("email_template_validation_DP_conge")
 
@@ -274,7 +310,7 @@ class Demande(models.Model):
                 number_day_befor_date = self.date_from.date() - date.today()
                 if number_day_befor_date <= timedelta(days=5):
                     raise UserError(_('Vous devez choisir votre congé 5 jours avant'))
-            if holiday.number_of_days > holiday.nombre_jour_restant:
+            if holiday.number_of_days > holiday.nombre_jour_restant and self.holiday_status_id.name!="Arrêt maladie":
                 raise UserError(_('Vous n\'avez pas le nombre de jour demandé pour ce type de congé'))
 
     def action_send_email_notifier(self, temp):
@@ -436,3 +472,17 @@ class Demande(models.Model):
                 if mapped_days:
                     leave_days = mapped_days[record.employee_id.id][record.holiday_status_id.id]
                     record.nombre_jour_restant  = leave_days['remaining_leaves']
+
+    # @api.depends('employee_id')
+    # def _compute_can_remettre_brouillon(self):
+    #     current_user = self.env.user
+    #     for rec in self:
+    #         rec.can_remettre_brouillon = (
+    #                 rec.employee_id.user_id.id == current_user.id
+    #         )
+
+    @api.depends('create_uid')
+    def _compute_can_remettre_brouillon(self):
+        current_user = self.env.user
+        for leave in self:
+            leave.can_remettre_brouillon = (leave.create_uid == current_user)

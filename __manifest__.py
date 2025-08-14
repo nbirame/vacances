@@ -36,6 +36,7 @@
         # 'views/ferier_view.xml',
         'views/views.xml',
         'views/resource_view.xml',
+        'views/attribution_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
