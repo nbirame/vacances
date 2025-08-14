@@ -36,8 +36,7 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour,<br/>
                      <span t-out="object.user_id.name or ''"></span><br/>
-                     <p>Votre demande de congé a été accepté. Passez d'excellente vacances.</p><br/>
-                     <!--<span t-out="object.get_url(object.id) or ''"></span>-->
+                     <p>Votre demande de congé a été accepté. Passez d'excellente vacances.</p>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -105,7 +104,7 @@
                             <span t-out="object.date_to.strftime('%d/%m/%Y') or ''"></span>
                          </span><span t-else=""></span>
                             <br/>
-                         <p>Cliquer sur le lien ci-dessous</p></br>-->
+                         <p>Cliquer sur le lien ci-dessous</p>
                          <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -165,7 +164,7 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour,<br/>
                      <span t-out="object.user_id.name or ''"></span><br/>
-                     <p>Votre demande de congé a été rejeté</p><br/>
+                     <p>Votre demande de congé a été rejeté</p>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -181,7 +180,7 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour,<br/>
                      <span t-out="object.user_id.name or ''"></span><br/>
-                     <p>Votre demande de congé a été validé par votre chef de département </p><br/>
+                     <p>Votre demande de congé a été validé par votre chef de département </p>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -197,7 +196,7 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour,<br/>
                      <span t-out="object.user_id.name or ''"></span><br/>
-                     <p>Votre demande de congé a été validé par votre Directeur </p><br/>
+                     <p>Votre demande de congé a été validé par votre Directeur </p>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -213,7 +212,7 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour,<br/>
                      <span t-out="object.user_id.name or ''"></span><br/>
-                     <p>Votre demande de congé a été validé par DRH </p><br/>
+                     <p>Votre demande de congé a été validé par DRH </p>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -229,7 +228,7 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour,<br/>
                      <span t-out="object.user_id.name or ''"></span><br/>
-                     <p>Votre demande de congé a été validé par SG </p><br/>
+                     <p>Votre demande de congé a été validé par SG </p>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -245,7 +244,7 @@
             <field name="body_html"><![CDATA[
                     <div>Bonjour,<br/>
                      <span t-out="object.user_id.name or ''"></span><br/>
-                     <p>Votre demande de congé a été validé par AG </p><br/>
+                     <p>Votre demande de congé a été validé par AG </p>
                      <a t-attf-href="{{object.get_url(object.id) }}">Voir congé</a>
                     </div>
                         ]]>
@@ -260,7 +259,7 @@
             <field name="auto_delete" eval="True"/>
             <field name="body_html"><![CDATA[
                     <div>Bonjour DRH,
-                         <p> L'agent <span t-out="object.employee_id.name or ''"></span><br/>
+                         <p> L'agent <span t-out="object.employee_id.name or ''"></span>
                          a fait une demande d'allocation congé.</p>
                     </div>
                         ]]>
